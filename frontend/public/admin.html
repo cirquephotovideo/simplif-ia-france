@@ -87,47 +87,30 @@
     height: 100vh;
     display: flex; flex-direction: column;
     overflow-y: auto;
-    /* Fond noir profond */
+    /* Bordure transparente — la couleur arrive via le background border-box */
+    border: 5px solid transparent;
+    /* 2 couches de fond : interior (padding-box, sombre) + cadre (border-box, tricolore animé) */
     background:
-      radial-gradient(ellipse 50% 35% at 50% 0%, rgba(0, 85, 164, 0.15) 0%, transparent 65%),
-      radial-gradient(ellipse 50% 35% at 50% 100%, rgba(239, 65, 53, 0.12) 0%, transparent 65%),
-      linear-gradient(180deg, #08081C 0%, #0C0C22 50%, #08081C 100%);
+      /* Couche 1 — INTÉRIEUR : halos + base noire (padding-box → ne déborde pas sur la bordure) */
+      radial-gradient(ellipse 50% 35% at 50% 0%, rgba(0, 85, 164, 0.18) 0%, transparent 65%) padding-box,
+      radial-gradient(ellipse 50% 35% at 50% 100%, rgba(239, 65, 53, 0.15) 0%, transparent 65%) padding-box,
+      linear-gradient(180deg, #08081C 0%, #0C0C22 50%, #08081C 100%) padding-box,
+      /* Couche 2 — CADRE animé tricolore (border-box → remplit la bordure de 5px) */
+      conic-gradient(
+        from var(--tricolor-angle),
+        #0055A4 0deg,
+        #0055A4 95deg,
+        #FFFFFF 125deg,
+        #FFFFFF 175deg,
+        #EF4135 205deg,
+        #EF4135 305deg,
+        #0055A4 360deg
+      ) border-box;
     color: rgba(235, 235, 245, 0.88);
     box-shadow:
-      4px 0 32px rgba(0, 0, 0, 0.5),
-      inset 1px 0 0 rgba(255, 255, 255, 0.025);
-    isolation: isolate;
-  }
-
-  /* ── Cadre tricolore animé qui tourne autour de la sidebar ── */
-  aside.sidebar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 5px;                          /* épaisseur de la bordure animée */
-    background: conic-gradient(
-      from var(--tricolor-angle),
-      #0055A4 0deg,
-      #0055A4 95deg,
-      #FFFFFF 125deg,
-      #FFFFFF 175deg,
-      #EF4135 205deg,
-      #EF4135 305deg,
-      #0055A4 360deg
-    );
-    /* Mask pour ne garder que la bordure (pas le fond) */
-    -webkit-mask:
-      linear-gradient(#fff, #fff) content-box,
-      linear-gradient(#fff, #fff);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#fff, #fff) content-box,
-      linear-gradient(#fff, #fff);
-    mask-composite: exclude;
-    filter: drop-shadow(0 0 8px rgba(0, 85, 164, 0.45))
-            drop-shadow(0 0 8px rgba(239, 65, 53, 0.35));
-    pointer-events: none;
-    z-index: 5;
+      0 0 24px rgba(0, 85, 164, 0.25),
+      0 0 24px rgba(239, 65, 53, 0.18),
+      4px 0 32px rgba(0, 0, 0, 0.5);
     animation: tricolorOrbit 7s linear infinite;
   }
 
@@ -135,13 +118,13 @@
     to { --tricolor-angle: 360deg; }
   }
 
-  /* Fallback navigateurs sans @property : tricolore statique mais bien visible */
+  /* Fallback navigateurs sans @property : tricolore statique vertical sur la bordure */
   @supports not (background: conic-gradient(from var(--x, 0deg), red, red)) {
-    aside.sidebar::before {
-      background: linear-gradient(180deg,
-        #0055A4 0%, #0055A4 33%,
-        #FFFFFF 33%, #FFFFFF 66%,
-        #EF4135 66%, #EF4135 100%);
+    aside.sidebar {
+      background:
+        radial-gradient(ellipse 50% 35% at 50% 0%, rgba(0, 85, 164, 0.18) 0%, transparent 65%) padding-box,
+        linear-gradient(180deg, #08081C 0%, #0C0C22 50%, #08081C 100%) padding-box,
+        linear-gradient(180deg, #0055A4 0% 33%, #FFFFFF 33% 66%, #EF4135 66% 100%) border-box;
       animation: none;
     }
   }
@@ -1723,18 +1706,100 @@
         </div>
       </div>
 
-      <!-- KPI -->
+      <!-- KPI · cards cliquables (filtre la table) -->
       <div class="kpi-row">
-        <div class="kpi-card k-blue"><div class="kpi-head"><div class="kpi-label">Total inscrits</div><div class="kpi-icon">📋</div></div><div class="kpi-value" id="wlKpiTotal">2 384</div><div class="kpi-meta"><span class="kpi-trend up">▲ +187 sur 7j</span></div></div>
-        <div class="kpi-card k-green"><div class="kpi-head"><div class="kpi-label">Premium attendus</div><div class="kpi-icon">💎</div></div><div class="kpi-value" id="wlKpiPremium">847</div><div class="kpi-meta"><span class="kpi-meta-text">35,5% conversion espérée</span></div></div>
-        <div class="kpi-card k-orange"><div class="kpi-head"><div class="kpi-label">Pro / Aidants</div><div class="kpi-icon">🏢</div></div><div class="kpi-value" id="wlKpiPro">312</div><div class="kpi-meta"><span class="kpi-meta-text">13% · CSP+</span></div></div>
-        <div class="kpi-card k-pink"><div class="kpi-head"><div class="kpi-label">Aujourd'hui</div><div class="kpi-icon">⚡</div></div><div class="kpi-value" id="wlKpiToday">27</div><div class="kpi-meta"><span class="kpi-trend up">▲ +5 vs hier</span></div></div>
+        <div class="kpi-card k-blue kpi-clickable" data-wl-kpi="all" role="button" tabindex="0" title="Voir tous les inscrits"><div class="kpi-head"><div class="kpi-label">Total inscrits</div><div class="kpi-icon">📋</div></div><div class="kpi-value" id="wlKpiTotal">2 384</div><div class="kpi-meta"><span class="kpi-trend up">▲ +187 sur 7j</span></div><div class="kpi-cta">Voir la liste →</div></div>
+        <div class="kpi-card k-green kpi-clickable" data-wl-kpi="premium" role="button" tabindex="0" title="Filtrer Premium attendus"><div class="kpi-head"><div class="kpi-label">Premium attendus</div><div class="kpi-icon">💎</div></div><div class="kpi-value" id="wlKpiPremium">847</div><div class="kpi-meta"><span class="kpi-meta-text">35,5% conversion espérée</span></div><div class="kpi-cta">Filtrer Premium →</div></div>
+        <div class="kpi-card k-orange kpi-clickable" data-wl-kpi="pro" role="button" tabindex="0" title="Filtrer Pro / Aidants"><div class="kpi-head"><div class="kpi-label">Pro / Aidants</div><div class="kpi-icon">🏢</div></div><div class="kpi-value" id="wlKpiPro">312</div><div class="kpi-meta"><span class="kpi-meta-text">13% · CSP+</span></div><div class="kpi-cta">Filtrer Pro →</div></div>
+        <div class="kpi-card k-pink kpi-clickable" data-wl-kpi="recent" role="button" tabindex="0" title="Voir les inscriptions du jour"><div class="kpi-head"><div class="kpi-label">Aujourd'hui</div><div class="kpi-icon">⚡</div></div><div class="kpi-value" id="wlKpiToday">27</div><div class="kpi-meta"><span class="kpi-trend up">▲ +5 vs hier</span></div><div class="kpi-cta">Voir les nouveaux →</div></div>
       </div>
 
-      <!-- Bloc growth chart + sources -->
+      <style>
+        .kpi-clickable { cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+        .kpi-clickable:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,30,.10); border-color: rgba(0,0,145,0.25) !important; }
+        .kpi-clickable:focus-visible { outline: 2px solid #6A6AF4; outline-offset: 2px; }
+        .kpi-cta { font-size: 11px; font-weight: 700; color: rgba(0,0,145,0.85); margin-top: 6px; opacity: 0; transition: opacity .2s ease; letter-spacing: 0.01em; }
+        .kpi-clickable:hover .kpi-cta { opacity: 1; }
+      </style>
+
+      <script>
+      (function wireWaitingListKpis(){
+        document.querySelectorAll('.kpi-clickable[data-wl-kpi]').forEach(card => {
+          const trigger = () => {
+            const filter = card.getAttribute('data-wl-kpi');
+            const pill = document.querySelector(`[data-wl-filter="${filter}"]`);
+            if (pill) {
+              pill.click();
+              const table = document.querySelector('.table-card');
+              if (table) table.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              pill.style.transition = 'transform .25s, box-shadow .25s';
+              pill.style.transform = 'scale(1.1)';
+              pill.style.boxShadow = '0 0 0 4px rgba(106,106,244,0.25)';
+              setTimeout(() => { pill.style.transform=''; pill.style.boxShadow=''; }, 600);
+            }
+          };
+          card.addEventListener('click', trigger);
+          card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); trigger(); } });
+        });
+
+        // ── Détail Croissance 30 jours ──
+        const growthCard = document.getElementById('wlGrowthCard');
+        if (growthCard) growthCard.addEventListener('click', () => openInfoModal({
+          title: '📈 Croissance 30 jours · détail',
+          html: `
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;">
+              <div style="background:#F3F4FB;padding:14px;border-radius:12px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.06em;font-weight:700;">Nouvelles inscriptions</div><div style="font-size:24px;font-weight:800;color:#000091;margin-top:4px;">+ 187</div><div style="font-size:11px;color:#00C896;font-weight:700;">+34% vs 7j précédents</div></div>
+              <div style="background:#F3F4FB;padding:14px;border-radius:12px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.06em;font-weight:700;">Taux d'attente moyen</div><div style="font-size:24px;font-weight:800;color:#000091;margin-top:4px;">12 j</div><div style="font-size:11px;color:#FF6F00;font-weight:700;">−2j vs mois dernier</div></div>
+              <div style="background:#F3F4FB;padding:14px;border-radius:12px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.06em;font-weight:700;">Taux de désinscription</div><div style="font-size:24px;font-weight:800;color:#000091;margin-top:4px;">1,2 %</div><div style="font-size:11px;color:#00C896;font-weight:700;">−0,3pts</div></div>
+              <div style="background:#F3F4FB;padding:14px;border-radius:12px;"><div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.06em;font-weight:700;">Projection 30j</div><div style="font-size:24px;font-weight:800;color:#000091;margin-top:4px;">~ 5 600</div><div style="font-size:11px;color:#00C896;font-weight:700;">objectif 5 000 ✓</div></div>
+            </div>
+            <p style="color:#666;font-size:13px;line-height:1.6;">L'objectif de 5 000 inscrits avant lancement sera atteint <strong>~17 jours avant la deadline</strong> au rythme actuel. La presse (5%) et LinkedIn (3%) sont sous-représentés — opportunités à pousser via campagne PR.</p>
+            <button class="filter-pill" style="margin-top:14px;background:var(--bleu,#000091);color:white;border-color:var(--bleu,#000091);" onclick="document.getElementById('wlExportCsv')?.click(); document.body.querySelector('.info-modal-bg')?.remove();">📤 Exporter la liste complète</button>
+          `,
+        }));
+
+        // ── Détail Sources d'acquisition ──
+        const sourcesCard = document.getElementById('wlSourcesCard');
+        if (sourcesCard) sourcesCard.addEventListener('click', () => openInfoModal({
+          title: '🌐 Sources d\\'acquisition · détail',
+          html: `
+            <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:18px;">
+              <thead style="background:#F3F4FB;text-align:left;"><tr><th style="padding:10px;">Source</th><th style="padding:10px;text-align:right;">Inscrits</th><th style="padding:10px;text-align:right;">Conversion</th><th style="padding:10px;text-align:right;">CAC</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:10px;">🌍 Landing organique</td><td style="padding:10px;text-align:right;"><strong>1 487 · 62%</strong></td><td style="padding:10px;text-align:right;">38%</td><td style="padding:10px;text-align:right;color:#00C896;font-weight:700;">0 €</td></tr>
+                <tr><td style="padding:10px;">👥 Parrainage</td><td style="padding:10px;text-align:right;"><strong>523 · 22%</strong></td><td style="padding:10px;text-align:right;">52%</td><td style="padding:10px;text-align:right;color:#00C896;font-weight:700;">3 €</td></tr>
+                <tr><td style="padding:10px;">🐦 Twitter / X</td><td style="padding:10px;text-align:right;"><strong>189 · 8%</strong></td><td style="padding:10px;text-align:right;">28%</td><td style="padding:10px;text-align:right;color:#FF6F00;font-weight:700;">12 €</td></tr>
+                <tr><td style="padding:10px;">📰 Presse</td><td style="padding:10px;text-align:right;"><strong>117 · 5%</strong></td><td style="padding:10px;text-align:right;">44%</td><td style="padding:10px;text-align:right;color:#00C896;font-weight:700;">2 €</td></tr>
+                <tr><td style="padding:10px;">💬 LinkedIn</td><td style="padding:10px;text-align:right;"><strong>68 · 3%</strong></td><td style="padding:10px;text-align:right;">61%</td><td style="padding:10px;text-align:right;color:#FF6F00;font-weight:700;">18 €</td></tr>
+              </tbody>
+            </table>
+            <p style="color:#666;font-size:13px;line-height:1.6;"><strong>Insight IA :</strong> Le parrainage a le meilleur ROI (CAC 3 € · conversion 52%). À renforcer : programme parrain 2.0 avec 1 mois Premium gratuit pour parrain + filleul. LinkedIn a la meilleure conversion mais CAC élevé — cibler les pros uniquement.</p>
+          `,
+        }));
+
+        // Mini modal générique
+        function openInfoModal({ title, html }) {
+          const bg = document.createElement('div');
+          bg.className = 'info-modal-bg';
+          bg.style.cssText = 'position:fixed;inset:0;background:rgba(5,5,48,0.5);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeInBg .2s ease;';
+          bg.innerHTML = `
+            <div style="background:white;border-radius:16px;max-width:780px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,30,0.3);animation:slideUpModal .25s cubic-bezier(.32,.72,.52,1);">
+              <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:18px;border-bottom:1px solid #eee;padding-bottom:14px;">
+                <h2 style="margin:0;font-size:18px;font-weight:800;color:#0A0A23;">${title}</h2>
+                <button style="background:none;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;" onclick="this.closest('.info-modal-bg').remove();">×</button>
+              </div>
+              ${html}
+            </div>`;
+          bg.addEventListener('click', e => { if (e.target === bg) bg.remove(); });
+          document.body.appendChild(bg);
+        }
+      })();
+      </script>
+
+      <!-- Bloc growth chart + sources · cliquables -->
       <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:18px;">
-        <div class="dash-card">
-          <div class="dash-card-head"><div><div class="dash-card-title">📈 Croissance 30 jours</div><div class="dash-card-sub">+8,5% / semaine en moyenne</div></div></div>
+        <div class="dash-card kpi-clickable" id="wlGrowthCard" role="button" tabindex="0" title="Détail de la croissance">
+          <div class="dash-card-head"><div><div class="dash-card-title">📈 Croissance 30 jours</div><div class="dash-card-sub">+8,5% / semaine en moyenne</div></div><div class="kpi-cta" style="opacity:1;align-self:flex-start;">Détail →</div></div>
           <svg viewBox="0 0 600 180" style="width:100%;height:180px;">
             <defs>
               <linearGradient id="wlGrowGrad" x1="0" y1="0" x2="0" y2="1">
@@ -1762,8 +1827,8 @@
             <text x="565" y="170" font-size="10" fill="#999">Aujourd'hui</text>
           </svg>
         </div>
-        <div class="dash-card">
-          <div class="dash-card-head"><div><div class="dash-card-title">🌐 Sources d'acquisition</div><div class="dash-card-sub">depuis l'origine</div></div></div>
+        <div class="dash-card kpi-clickable" id="wlSourcesCard" role="button" tabindex="0" title="Détail des sources d'acquisition">
+          <div class="dash-card-head"><div><div class="dash-card-title">🌐 Sources d'acquisition</div><div class="dash-card-sub">depuis l'origine</div></div><div class="kpi-cta" style="opacity:1;align-self:flex-start;">Détail →</div></div>
           <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;">
             <div>
               <div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>🌍 Landing organique</span><strong>1 487 · 62%</strong></div>
