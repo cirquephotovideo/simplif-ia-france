@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.simplif-ia.fr wss://api.simplif-ia.fr https://api.elevenlabs.io https://api-adresse.data.gouv.fr https://recherche-entreprises.api.gouv.fr; media-src 'self' blob:; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Centre d'aide · Simplif'IA France</title>
+<meta name="description" content="Trouvez des réponses à vos questions sur Simplif'IA France : guides, articles, et support direct.">
+<meta property="og:title" content="Centre d'aide · Simplif'IA France">
+<meta property="og:description" content="Trouvez des réponses à vos questions sur Simplif'IA France : guides, articles, et support direct.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplif-ia.fr/aide.html">
+<meta property="og:image" content="https://simplif-ia.fr/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Centre d'aide · Simplif'IA France">
+<meta name="twitter:description" content="Trouvez des réponses à vos questions sur Simplif'IA France : guides, articles, et support direct.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/marbre-stars.css">
+<link rel="stylesheet" href="assets/elegance.css">
+<style>
+  .help-search { display: flex; gap: 8px; max-width: 600px; margin: 0 auto 40px; }
+  .help-search input { flex: 1; padding: 18px 22px; border-radius: 999px; border: 1.5px solid var(--border); font-size: 16px; font-family: inherit; }
+  .help-search input:focus { outline: none; border-color: var(--bleu); box-shadow: 0 0 0 4px var(--bleu-pale); }
+  .help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .help-grid { grid-template-columns: 1fr; } }
+  .help-cat { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.2s; cursor: pointer; }
+  .help-cat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--bleu-clair); }
+  .help-cat-icon { font-size: 32px; margin-bottom: 12px; }
+  .help-cat h3 { font-size: 18px; margin-bottom: 6px; }
+  .help-cat p { color: var(--text-soft); font-size: 14px; line-height: 1.6; }
+  .help-cat .count { display: inline-block; margin-top: 10px; background: var(--bleu-pale); color: var(--bleu); padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  details { background: white; border-radius: 12px; padding: 18px 22px; margin-bottom: 10px; border: 1px solid var(--border); }
+  details[open] { box-shadow: 0 4px 12px rgba(0,0,145,0.05); border-color: var(--bleu-clair); }
+  summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; display: flex; justify-content: space-between; }
+  summary::after { content: '+'; font-size: 22px; color: var(--bleu); transition: transform 0.2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin-top: 12px; color: var(--text-soft); line-height: 1.7; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html" class="site-nav-brand"><div class="site-nav-mark"></div>Simplif'IA <span style="color:var(--rouge);margin-left:-2px;">France</span></a>
+  <div class="site-nav-links"><a href="fonctionnalites.html">Fonctionnalités</a><a href="tarifs.html">Tarifs</a><a href="apropos.html">À propos</a><a href="aide.html" style="color:var(--bleu);font-weight:700;">Aide</a><a href="contact.html">Contact</a></div>
+  <div class="site-nav-cta"><a href="connexion.html" class="btn btn-ghost btn-sm">Connexion</a><a href="inscription.html" class="btn btn-primary btn-sm">Essayer</a></div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="section-tag">Centre d'aide</span>
+    <h1>Comment pouvons-nous<br><span class="accent">vous aider ?</span></h1>
+    <p>Explorez les guides, posez votre question, ou contactez-nous directement.</p>
+    <div class="help-search">
+      <input type="search" placeholder="Rechercher dans l'aide… ex: contester CAF, ajouter document">
+      <button class="btn btn-primary">Rechercher</button>
+    </div>
+  </div>
+</header>
+
+<section style="padding-top:0;"><div class="container">
+  <div class="help-grid">
+    <div class="help-cat" onclick="window.location.href='aide.html#demarrer'"><div class="help-cat-icon">🚀</div><h3>Bien démarrer</h3><p>Premier compte, ajout de documents, premier dialogue avec Maître Léa.</p><span class="count">12 articles</span></div>
+    <div class="help-cat" onclick="window.location.href='aide.html#documents'"><div class="help-cat-icon">📄</div><h3>Vos documents</h3><p>Coffre-fort, ajout, OCR, partage temporaire, suppression RGPD.</p><span class="count">8 articles</span></div>
+    <div class="help-cat" onclick="window.location.href='aide.html#demarches'"><div class="help-cat-icon">📋</div><h3>Vos démarches</h3><p>CAF, impôts, CNI, logement social, succession. Pas-à-pas illustrés.</p><span class="count">24 articles</span></div>
+    <div class="help-cat" onclick="window.location.href='aide.html#lea'"><div class="help-cat-icon">🎙️</div><h3>Maître Léa</h3><p>Comment lui parler efficacement, comprendre ses sources, mode FALC.</p><span class="count">9 articles</span></div>
+    <div class="help-cat" onclick="window.location.href='aide.html#sophie'"><div class="help-cat-icon">🤖</div><h3>Sophie · Agent emails</h3><p>Connecter votre boîte, configurer les règles auto, anti-phishing.</p><span class="count">6 articles</span></div>
+    <div class="help-cat" onclick="window.location.href='aide.html#facturation'"><div class="help-cat-icon">💳</div><h3>Facturation</h3><p>Plans, paiement, factures, gratuité minima sociaux, annulation.</p><span class="count">7 articles</span></div>
+  </div>
+</div></section>
+
+<section style="background:var(--gris-soft);" id="demarrer"><div class="container-sm">
+  <span class="section-tag">FAQ générale</span>
+  <h2>Questions fréquentes</h2>
+  <details><summary>Comment créer mon compte ?</summary><p>Cliquez sur "Essayer gratuitement" en haut à droite. Choisissez FranceConnect+ (recommandé pour la sécurité) ou inscription par email. 14 jours d'essai sans carte bancaire.</p></details>
+  <details><summary>Mes données sont-elles vraiment privées ?</summary><p>Oui. Tous vos documents sont chiffrés AES-256 avant même d'arriver sur nos serveurs. La clé de déchiffrement est dérivée de votre passphrase, jamais stockée chez nous. Même nos administrateurs ne peuvent pas ouvrir vos fichiers. Aucune donnée n'est utilisée pour entraîner l'IA (engagement contractuel Enterprise).</p></details>
+  <details><summary>L'IA peut-elle hallucinier ?</summary><p>Notre IA fonctionne en mode RAG strict : elle ne peut citer que des textes existants dans la base officielle (Légifrance, Service-Public.fr, BOFiP, Code civil, Code Sécu Soc). Si une information n'existe pas dans cette base, elle vous dit "je ne sais pas" plutôt que d'inventer.</p></details>
+  <details><summary>L'IA peut-elle me donner un conseil juridique ?</summary><p>Conformément à l'article 4 de la loi du 31 décembre 1971, Simplif'IA est un <strong>outil</strong>, pas un cabinet d'avocats. L'IA présente les options légales prévues par les textes officiels mais ne remplace pas un conseil personnalisé d'avocat ou de notaire pour les cas complexes.</p></details>
+  <details><summary>Une LRE Électronique a-t-elle vraiment la même valeur qu'un recommandé papier ?</summary><p>Oui, depuis 2018, la LRE qualifiée eIDAS (Lettre Recommandée Électronique) a exactement la même valeur juridique qu'un recommandé papier, partout en Europe. Nous passons par AR24, l'opérateur agréé de La Poste.</p></details>
+  <details><summary>Et si je gagne moins de 12 000 € par an ?</summary><p>Le service Premium est <strong>gratuit</strong> pour les bénéficiaires des minima sociaux. Il vous suffit d'uploader votre avis d'imposition pour activer la gratuité automatiquement. Notre conviction : ceux qui en ont le plus besoin ne devraient pas payer pour accéder à leurs droits.</p></details>
+  <details><summary>Puis-je annuler à tout moment ?</summary><p>Oui, sans frais ni délai. Un seul clic dans Paramètres → Abonnement. Vous gardez l'accès jusqu'à la fin de la période payée, puis vous repassez en plan gratuit. Vos documents restent dans votre coffre-fort, accessibles en lecture.</p></details>
+  <details><summary>Comment exporter toutes mes données (RGPD) ?</summary><p>Allez dans Paramètres → Confidentialité → "Exporter toutes mes données". Vous recevez un ZIP par email contenant tous vos documents (déchiffrés à la volée), votre profil, votre historique de démarches et vos audit logs. Conformément à l'article 20 du RGPD (portabilité).</p></details>
+</div></section>
+
+<section><div class="container text-center">
+  <h2>Vous ne trouvez pas ?</h2>
+  <p style="color:var(--text-soft);font-size:17px;margin-bottom:24px;">Notre équipe répond sous 24h ouvrées.</p>
+  <a href="contact.html" class="btn btn-primary btn-lg">📧 Nous contacter</a>
+</div></section>
+
+<footer class="site-footer"><div class="site-footer-grid"><div><div class="site-footer-brand"><div class="site-nav-mark"></div>Simplif'IA France</div></div><div><h4>Produit</h4><ul><li><a href="fonctionnalites.html">Fonctionnalités</a></li><li><a href="tarifs.html">Tarifs</a></li></ul></div><div><h4>Société</h4><ul><li><a href="apropos.html">À propos</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><h4>Légal</h4><ul><li><a href="cgu.html">CGU</a></li><li><a href="confidentialite.html">Confidentialité</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div></div><div class="site-footer-bottom"><div>© 2026 Simplif'IA France</div><div>🇫🇷 Made in France</div></div></footer>
+<script src="assets/search.js" defer></script>
+<script src="assets/themes.js" defer></script>
+<script src="assets/polish.js" defer></script>
+</body></html>

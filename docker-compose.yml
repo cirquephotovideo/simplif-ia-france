@@ -1,0 +1,102 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-simplifia}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-simplifia}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-simplifia}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [internal]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [internal]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - storage-data:/app/storage
+    networks: [internal, public]
+    labels:
+      - "coolify.managed=true"
+      # ── Routing Traefik (Coolify production) ──
+      - "traefik.enable=true"
+      - "traefik.docker.network=public"
+      # API sur api.simplif-ia.fr et api.simplif-ia.com
+      - "traefik.http.routers.simplif-backend.rule=Host(`api.simplif-ia.fr`) || Host(`api.simplif-ia.com`)"
+      - "traefik.http.routers.simplif-backend.entrypoints=https"
+      - "traefik.http.routers.simplif-backend.tls=true"
+      - "traefik.http.routers.simplif-backend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.simplif-backend.loadbalancer.server.port=8000"
+      # Redirection HTTP → HTTPS
+      - "traefik.http.routers.simplif-backend-http.rule=Host(`api.simplif-ia.fr`) || Host(`api.simplif-ia.com`)"
+      - "traefik.http.routers.simplif-backend-http.entrypoints=http"
+      - "traefik.http.routers.simplif-backend-http.middlewares=https-redirect"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    # Volume mount : sert les fichiers du disque en direct (pas besoin de rebuild)
+    # Pour la prod (Coolify), commenter cette ligne et faire un build complet
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html:ro
+    networks: [internal, public]
+    labels:
+      - "coolify.managed=true"
+      # ── Routing Traefik (Coolify production) ──
+      - "traefik.enable=true"
+      - "traefik.docker.network=public"
+      # Frontend principal : .fr (canonical) + .com sur le même service
+      - "traefik.http.routers.simplif-frontend.rule=Host(`simplif-ia.fr`) || Host(`www.simplif-ia.fr`) || Host(`simplif-ia.com`) || Host(`www.simplif-ia.com`)"
+      - "traefik.http.routers.simplif-frontend.entrypoints=https"
+      - "traefik.http.routers.simplif-frontend.tls=true"
+      - "traefik.http.routers.simplif-frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.simplif-frontend.loadbalancer.server.port=80"
+      # Redirection HTTP → HTTPS
+      - "traefik.http.routers.simplif-frontend-http.rule=Host(`simplif-ia.fr`) || Host(`www.simplif-ia.fr`) || Host(`simplif-ia.com`) || Host(`www.simplif-ia.com`)"
+      - "traefik.http.routers.simplif-frontend-http.entrypoints=http"
+      - "traefik.http.routers.simplif-frontend-http.middlewares=https-redirect"
+
+networks:
+  internal:
+    driver: bridge
+  public:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  storage-data:

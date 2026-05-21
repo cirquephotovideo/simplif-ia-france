@@ -1,0 +1,15 @@
+# robots.txt · Simplif'IA France
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /facturation.html
+Disallow: /factures.html
+Disallow: /parametres.html
+Disallow: /api/
+
+# Crawl delay raisonnable
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://simplif-ia.fr/sitemap.xml

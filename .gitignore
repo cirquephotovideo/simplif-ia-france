@@ -1,0 +1,59 @@
+# Env & secrets
+.env
+.env.local
+.env.production
+*.key
+*.pem
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Database
+*.db
+*.sqlite3
+postgres-data/
+redis-data/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+.docker/
+
+# Build
+dist/
+build/
+*.egg
+
+# Uploads (chiffrés en runtime)
+uploads/
+storage/
+
+# Junk
+node_modules/
+*.bak

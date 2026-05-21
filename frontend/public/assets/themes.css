@@ -1,0 +1,723 @@
+/* ============================================================================
+   Simplif'IA France — Pack 21 · Thèmes alternatifs
+   Activés via <body data-theme="familial"> ou <body data-theme="marbre">
+   Le thème par défaut reste celui de style.css (Refined Modern)
+   ============================================================================ */
+
+
+/* ============================================================================
+   THÈME 1 · FAMILIAL · doux & accessible
+   Palette rouge/jaune/vert atténuée, pensée pour personnes âgées et jeunes
+   - Contraste WCAG AAA partout
+   - Police +1px par défaut
+   - Border-radius généreux (chaleureux)
+   - Hover plus marqué (clarté pour seniors)
+   ============================================================================ */
+
+body[data-theme="familial"] {
+  --bleu: #C73032;          /* Rouge tomate doux (accents seulement) */
+  --bleu-2: #B82A2C;
+  --bleu-clair: #E07A7C;
+  --bleu-pale: #FCE9EA;
+  --bleu-mist: #FEF5F5;
+  --bleu-deep: #6E1B1D;
+
+  --rouge: #C73032;
+  --rouge-soft: #FCE9EA;
+
+  --vert: #5A8F4F;          /* Vert sauge */
+  --vert-soft: #E8F0E5;
+  --vert-vif: #7AB36F;
+
+  --jaune: #E8B53A;         /* Jaune miel */
+  --jaune-soft: #FBF1D9;
+  --orange: #E08E3F;
+
+  /* === Backgrounds BLANCS (pas de crème) === */
+  --gris-50: #FAFAFB;
+  --gris-100: #F4F4F7;
+  --gris-200: #E8E8EE;
+  --gris-300: #D4D4DC;
+  --gris-400: #A0A0AC;
+
+  /* Texte sombre standard */
+  --text: #18181B;
+  --text-soft: #52525B;
+  --text-mute: #8A8A92;
+
+  --bg: #FFFFFF;            /* BLANC PUR */
+  --bg-soft: #FAFAFB;
+  --bg-mute: #F4F4F7;
+  --card: #FFFFFF;
+  --border: #EBEBF1;
+  --border-strong: #D4D4DC;
+
+  --noir: #09090B;
+
+  /* Shadows neutres */
+  --shadow-xs: 0 1px 2px rgba(9, 9, 11, 0.04);
+  --shadow-sm: 0 2px 8px rgba(9, 9, 11, 0.06);
+  --shadow-md: 0 8px 24px -6px rgba(9, 9, 11, 0.10);
+  --shadow-lg: 0 24px 48px -12px rgba(9, 9, 11, 0.18);
+
+  /* Radius généreux (look câlin) */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-2xl: 36px;
+  --r-3xl: 48px;
+
+  font-size: 16px;
+}
+
+/* === Fond BLANC pur === */
+body[data-theme="familial"] {
+  background: #FFFFFF;
+}
+
+body[data-theme="familial"] .hero {
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%, rgba(199, 48, 50, 0.04), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 10% 80%, rgba(232, 181, 58, 0.04), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 90% 80%, rgba(90, 143, 79, 0.04), transparent 70%),
+    #FFFFFF;
+}
+
+body[data-theme="familial"] .hero h1 .accent {
+  background: linear-gradient(135deg, var(--bleu) 0%, var(--jaune) 50%, var(--vert) 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Drapeau français AUTHENTIQUE (bleu / blanc / rouge Marianne) — visible et net */
+body[data-theme="familial"] .site-nav-mark {
+  background: linear-gradient(90deg,
+    #0055A4 0% 33.33%,
+    #FFFFFF 33.33% 66.66%,
+    #EF4135 66.66%
+  );
+  box-shadow:
+    0 1px 4px rgba(9, 9, 11, 0.18),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Boutons plus généreux + warm */
+body[data-theme="familial"] .btn {
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+}
+body[data-theme="familial"] .btn-lg { padding: 16px 30px; font-size: 16px; }
+body[data-theme="familial"] .btn-primary {
+  background: var(--vert);
+  color: white;
+  border-color: var(--vert);
+}
+body[data-theme="familial"] .btn-primary:hover {
+  background: #4D7D44;
+  color: white;
+}
+body[data-theme="familial"] .btn-marianne {
+  background: var(--bleu);
+  color: white;
+}
+
+body[data-theme="familial"] .section-tag {
+  background: var(--jaune-soft);
+  border-color: var(--jaune);
+  color: var(--bleu-deep);
+}
+
+/* Cards plus généreuses */
+body[data-theme="familial"] .card {
+  border-radius: var(--r-lg);
+  padding: 28px;
+}
+
+/* Footer blanc cassé léger */
+body[data-theme="familial"] .site-footer {
+  background: var(--gris-50);
+}
+
+/* Lignes plus aérées partout */
+body[data-theme="familial"] p,
+body[data-theme="familial"] li {
+  line-height: 1.75;
+}
+
+
+/* ============================================================================
+   THÈME 2 · MARBRE & ÉTOILES · noir profond + doré + texture marbre
+   - Background étoilé animé (CSS only)
+   - Titres avec texture marbre via gradient
+   - Or et noir profond exclusivement
+   ============================================================================ */
+
+body[data-theme="marbre"] {
+  --bleu: #D4AF37;          /* Or principal */
+  --bleu-2: #B89026;
+  --bleu-clair: #F5D77F;
+  --bleu-pale: #1A1614;
+  --bleu-mist: #14110E;
+  --bleu-deep: #FFE9A0;
+
+  --rouge: #C9304A;
+  --rouge-soft: #2A0D14;
+
+  --vert: #5AB880;
+  --vert-soft: #0F1A14;
+  --vert-vif: #7DD9A0;
+
+  --jaune: #FFD700;
+  --orange: #FFB400;
+  --violet: #B084E8;
+
+  /* Dark neutrals */
+  --gris-50: #1A1815;
+  --gris-100: #14130F;
+  --gris-200: #211E18;
+  --gris-300: #2D2A24;
+  --gris-400: #3F3C36;
+  --gris-500: #65615A;
+  --gris-600: #8A867F;
+  --gris-700: #B5B0A8;
+  --gris-800: #D4CFC6;
+  --gris-900: #F0EBE0;
+
+  --text: #F0EBE0;
+  --text-soft: #C9C2B5;
+  --text-mute: #8A867F;
+  --text-inverse: #08070D;
+
+  --bg: #08070D;            /* Noir bleuté profond */
+  --bg-soft: #0E0D14;
+  --bg-mute: #14130F;
+  --card: #14130F;
+  --border: #2D2A24;
+  --border-strong: #3F3C36;
+
+  --noir: #D4AF37;          /* "Noir" devient doré pour boutons */
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 1px rgba(212, 175, 55, 0.2);
+  --shadow-md: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(212, 175, 55, 0.15);
+  --shadow-lg: 0 32px 64px -16px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.2);
+  --shadow-glow: 0 0 24px rgba(212, 175, 55, 0.3);
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* === Étoiles en fond, animées === */
+body[data-theme="marbre"] {
+  position: relative;
+  overflow-x: hidden;
+}
+
+body[data-theme="marbre"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    /* Couche 1 : grosses étoiles dorées brillantes */
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(255, 215, 0, 0.95), transparent 50%),
+    radial-gradient(2px 2px at 80% 10%, rgba(255, 215, 0, 0.9), transparent 50%),
+    radial-gradient(1px 1px at 50% 80%, rgba(255, 215, 0, 0.8), transparent 50%),
+    radial-gradient(2px 2px at 10% 70%, rgba(245, 215, 127, 0.9), transparent 50%),
+    radial-gradient(1.5px 1.5px at 90% 60%, rgba(255, 215, 0, 0.85), transparent 50%),
+    radial-gradient(1px 1px at 65% 40%, rgba(255, 215, 0, 0.7), transparent 50%),
+    radial-gradient(1.5px 1.5px at 35% 55%, rgba(245, 215, 127, 0.8), transparent 50%),
+    radial-gradient(2px 2px at 75% 85%, rgba(255, 215, 0, 0.9), transparent 50%),
+    radial-gradient(1px 1px at 25% 90%, rgba(245, 215, 127, 0.6), transparent 50%),
+    radial-gradient(1.5px 1.5px at 95% 20%, rgba(255, 215, 0, 0.8), transparent 50%),
+    /* Couche 2 : petites étoiles blanches plus discrètes */
+    radial-gradient(0.5px 0.5px at 15% 15%, rgba(255, 250, 230, 0.6), transparent 50%),
+    radial-gradient(0.5px 0.5px at 45% 25%, rgba(255, 250, 230, 0.5), transparent 50%),
+    radial-gradient(0.5px 0.5px at 70% 70%, rgba(255, 250, 230, 0.7), transparent 50%),
+    radial-gradient(0.5px 0.5px at 30% 75%, rgba(255, 250, 230, 0.5), transparent 50%),
+    radial-gradient(0.5px 0.5px at 85% 45%, rgba(255, 250, 230, 0.6), transparent 50%),
+    /* Couche 3 : gradient profondeur (nébuleuse dorée) */
+    radial-gradient(ellipse 50% 30% at 50% 0%, rgba(212, 175, 55, 0.08), transparent 70%),
+    radial-gradient(ellipse 30% 20% at 80% 100%, rgba(176, 132, 232, 0.05), transparent 70%);
+  background-size: 100% 100%;
+  animation: starfield 60s linear infinite;
+}
+
+body[data-theme="marbre"]::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 215, 0, 1), transparent 50%),
+    radial-gradient(1.5px 1.5px at 58% 35%, rgba(255, 215, 0, 1), transparent 50%),
+    radial-gradient(1px 1px at 38% 88%, rgba(255, 215, 0, 1), transparent 50%),
+    radial-gradient(1px 1px at 88% 92%, rgba(255, 215, 0, 1), transparent 50%);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starfield {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-40px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Tout le contenu au-dessus des étoiles */
+body[data-theme="marbre"] > * { position: relative; z-index: 1; }
+
+/* === Titres en marbre doré === */
+body[data-theme="marbre"] h1,
+body[data-theme="marbre"] h2,
+body[data-theme="marbre"] .marble {
+  background-image:
+    linear-gradient(135deg,
+      #FFE9A0 0%,
+      #D4AF37 12%,
+      #F8E294 25%,
+      #B89026 38%,
+      #FFE9A0 50%,
+      #D4AF37 62%,
+      #F8E294 75%,
+      #B89026 88%,
+      #FFE9A0 100%
+    ),
+    /* Texture veines marbre */
+    radial-gradient(ellipse at 20% 30%, rgba(255, 250, 230, 0.4) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 60%, rgba(184, 144, 38, 0.3) 0%, transparent 50%);
+  background-size: 200% 200%, 100% 100%, 100% 100%;
+  background-position: 0% 50%, center, center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-color: transparent;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  animation: marble-shift 8s ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
+}
+
+@keyframes marble-shift {
+  0% { background-position: 0% 50%, center, center; }
+  100% { background-position: 100% 50%, center, center; }
+}
+
+/* H3+ en doré uni (plus lisible) */
+body[data-theme="marbre"] h3,
+body[data-theme="marbre"] h4 {
+  color: var(--jaune);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+}
+
+/* === Hero === */
+body[data-theme="marbre"] .hero {
+  background: transparent;
+}
+body[data-theme="marbre"] .hero::before { display: none; }
+
+body[data-theme="marbre"] .hero h1 .accent {
+  background-image: linear-gradient(135deg, #FFE9A0 0%, #FFD700 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+body[data-theme="marbre"] .hero p,
+body[data-theme="marbre"] p {
+  color: var(--text-soft);
+}
+
+body[data-theme="marbre"] .section-tag {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.3);
+  color: var(--jaune);
+  backdrop-filter: blur(8px);
+}
+
+/* === Navigation === */
+body[data-theme="marbre"] .site-nav {
+  background: rgba(8, 7, 13, 0.6);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+body[data-theme="marbre"] .site-nav-brand {
+  color: #F4F4F7;                     /* Blanc cassé propre (au lieu du jaune trop fort) */
+  font-weight: 700;
+}
+
+/* Drapeau français AUTHENTIQUE (bleu Marianne / blanc / rouge) — fort contraste */
+body[data-theme="marbre"] .site-nav-mark {
+  background: linear-gradient(90deg,
+    #0055A4 0% 33.33%,                /* Bleu drapeau FR lumineux · visible sur fond sombre */
+    #FFFFFF 33.33% 66.66%,            /* Blanc pur · BIEN visible */
+    #EF4135 66.66%
+  );
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 4px 16px rgba(255, 255, 255, 0.15),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.7);
+}
+
+/* Le "France" reste rouge mais brille */
+body[data-theme="marbre"] .site-nav-brand span {
+  color: #E1000F !important;
+  text-shadow: 0 0 12px rgba(225, 0, 15, 0.4);
+}
+
+body[data-theme="marbre"] .site-nav-links a {
+  color: var(--text-soft);
+}
+body[data-theme="marbre"] .site-nav-links a:hover {
+  color: var(--jaune);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+/* === Boutons dorés === */
+body[data-theme="marbre"] .btn-primary {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B89026 100%);
+  color: var(--bg);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  font-weight: 700;
+}
+body[data-theme="marbre"] .btn-primary:hover {
+  background: linear-gradient(135deg, #FFE9A0 0%, #FFD700 50%, #D4AF37 100%);
+  color: var(--bg);
+  box-shadow: 0 0 32px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+body[data-theme="marbre"] .btn-secondary {
+  background: rgba(212, 175, 55, 0.06);
+  color: var(--jaune);
+  border-color: rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(8px);
+}
+body[data-theme="marbre"] .btn-secondary:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--jaune);
+  color: var(--jaune);
+}
+
+body[data-theme="marbre"] .btn-ghost {
+  color: var(--text-soft);
+}
+body[data-theme="marbre"] .btn-ghost:hover {
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--jaune);
+}
+
+body[data-theme="marbre"] .btn-marianne {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+  color: var(--bg);
+}
+
+/* === Cards glass dorées === */
+body[data-theme="marbre"] .card {
+  background: rgba(20, 19, 15, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+body[data-theme="marbre"] .card:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(33, 30, 24, 0.7);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(212, 175, 55, 0.15);
+  transform: translateY(-3px);
+}
+
+/* === Liens === */
+body[data-theme="marbre"] a {
+  color: var(--jaune);
+}
+body[data-theme="marbre"] a:hover {
+  color: var(--bleu-clair);
+}
+
+/* === Footer === */
+body[data-theme="marbre"] .site-footer {
+  background: linear-gradient(180deg, transparent 0%, rgba(20, 19, 15, 0.8) 100%);
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+body[data-theme="marbre"] .site-footer h4 {
+  color: var(--jaune);
+}
+
+body[data-theme="marbre"] .site-footer ul a {
+  color: var(--text-soft);
+}
+body[data-theme="marbre"] .site-footer ul a:hover {
+  color: var(--jaune);
+}
+
+/* === TOC, breadcrumb, legal === */
+body[data-theme="marbre"] .toc {
+  background: rgba(20, 19, 15, 0.6);
+  border-color: rgba(212, 175, 55, 0.18);
+}
+body[data-theme="marbre"] .toc h4 {
+  color: var(--jaune);
+}
+body[data-theme="marbre"] .toc a {
+  color: var(--text-soft);
+}
+body[data-theme="marbre"] .toc a:hover {
+  color: var(--jaune);
+}
+
+body[data-theme="marbre"] .legal-content code {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--jaune);
+}
+
+body[data-theme="marbre"] kbd {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--jaune);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+body[data-theme="marbre"] .breadcrumb,
+body[data-theme="marbre"] .breadcrumb a {
+  color: var(--text-mute);
+}
+body[data-theme="marbre"] .breadcrumb a:hover,
+body[data-theme="marbre"] .breadcrumb strong {
+  color: var(--jaune);
+}
+
+
+/* ============================================================================
+   ENRICHISSEMENTS THÈME FAMILIAL (en tant que thème principal)
+   ============================================================================ */
+
+/* Cards plus chaleureuses avec liseré coloré */
+body[data-theme="familial"] .card {
+  border-radius: 22px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+body[data-theme="familial"] .card:hover {
+  border-color: var(--jaune);
+  box-shadow: 0 16px 40px -8px rgba(232, 181, 58, 0.2), 0 0 0 1px var(--jaune);
+}
+
+/* Section-tags colorés selon contexte */
+body[data-theme="familial"] .section-tag {
+  background: linear-gradient(135deg, var(--bleu-pale), var(--jaune-soft));
+  border-color: var(--jaune);
+  color: var(--bleu-deep);
+  font-weight: 700;
+}
+
+/* Titres avec underline italique chaleureux */
+body[data-theme="familial"] h1 em,
+body[data-theme="familial"] h2 em,
+body[data-theme="familial"] h1 .serif,
+body[data-theme="familial"] h2 .serif {
+  background: linear-gradient(135deg, var(--bleu), var(--jaune), var(--vert));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Boutons CTA principaux : gradient tricolore doux */
+body[data-theme="familial"] .btn-marianne {
+  background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-2) 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(199, 48, 50, 0.25);
+}
+body[data-theme="familial"] .btn-marianne:hover {
+  background: linear-gradient(135deg, var(--bleu-2) 0%, var(--bleu-deep) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(199, 48, 50, 0.35);
+}
+
+/* Footer blanc cassé avec liseré tricolore */
+body[data-theme="familial"] .site-footer {
+  background: var(--gris-50);
+  border-top: 3px solid;
+  border-image: linear-gradient(90deg, var(--bleu), var(--jaune), var(--vert)) 1;
+}
+
+/* Liens en vert sauge (apaisant) */
+body[data-theme="familial"] a {
+  color: var(--vert);
+}
+body[data-theme="familial"] a:hover {
+  color: #4D7D44;
+}
+
+/* Liseré tricolore en haut de page (sous la nav) */
+body[data-theme="familial"] .site-nav {
+  border-bottom: none;
+  position: relative;
+}
+body[data-theme="familial"] .site-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bleu) 0% 33%, var(--jaune) 33% 66%, var(--vert) 66%);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* TOC avec touche colorée */
+body[data-theme="familial"] .toc {
+  background: linear-gradient(180deg, var(--jaune-soft), var(--bg));
+  border-color: var(--jaune);
+  border-left: 4px solid var(--jaune);
+}
+
+
+/* ============================================================================
+   THEME SWITCHER (bouton flottant + nav button + dropdown)
+   ============================================================================ */
+
+/* === Bouton dans la nav (visible) === */
+.sia-nav-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sia-nav-theme:hover {
+  background: var(--gris-100);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+body[data-theme="familial"] .sia-nav-theme {
+  background: linear-gradient(135deg, var(--bleu-pale), var(--jaune-soft));
+  border-color: var(--jaune);
+  color: var(--bleu-deep);
+}
+body[data-theme="familial"] .sia-nav-theme:hover {
+  background: linear-gradient(135deg, var(--jaune-soft), var(--vert-soft));
+}
+
+body[data-theme="marbre"] .sia-nav-theme {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--jaune);
+  backdrop-filter: blur(8px);
+}
+body[data-theme="marbre"] .sia-nav-theme:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--jaune);
+}
+
+@media (max-width: 700px) {
+  .sia-nav-theme-label { display: none; }
+  .sia-nav-theme { padding: 7px 10px; }
+}
+
+.sia-theme-switcher {
+  position: fixed;
+  bottom: 24px;
+  right: 152px;             /* À gauche du FAB Pro/Maison */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6A6AF4, #E1000F, #F5C518);
+  color: white;
+  font-size: 22px;
+  border: 2px solid white;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s var(--ease-out, ease);
+}
+.sia-theme-switcher:hover { transform: scale(1.08) rotate(15deg); }
+
+body[data-theme="marbre"] .sia-theme-switcher {
+  background: linear-gradient(135deg, #D4AF37, #FFD700, #B89026);
+  border-color: #FFE9A0;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+}
+
+body[data-theme="familial"] .sia-theme-switcher {
+  background: linear-gradient(135deg, #C73032, #E8B53A, #5A8F4F);
+  border-color: #FFFCF6;
+}
+
+.sia-theme-menu {
+  position: fixed;
+  bottom: 92px;
+  right: 152px;
+  width: 280px;
+  background: var(--card, white);
+  border: 1px solid var(--border, #ebebf1);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  z-index: 9001;
+  display: none;
+}
+.sia-theme-menu.open { display: block; animation: slideUp 0.2s ease; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sia-theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border: 1px solid transparent;
+}
+.sia-theme-option:hover { background: var(--gris-100, #f4f4f7); }
+.sia-theme-option.active { background: var(--bleu-pale, #eeeefa); border-color: var(--bleu, #000091); }
+
+.sia-theme-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.sia-theme-info { flex: 1; }
+.sia-theme-name { font-weight: 700; font-size: 14px; color: var(--text, #09090b); }
+.sia-theme-desc { font-size: 12px; color: var(--text-soft, #52525b); margin-top: 2px; }
+
+@media (max-width: 700px) {
+  .sia-theme-switcher { right: 88px; }
+  .sia-theme-menu { right: 16px; bottom: 92px; width: calc(100vw - 32px); max-width: 320px; }
+}

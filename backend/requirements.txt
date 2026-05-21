@@ -1,0 +1,31 @@
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+pydantic==2.9.2
+pydantic-settings==2.5.2
+sqlalchemy==2.0.35
+asyncpg==0.29.0
+alembic==1.13.3
+psycopg2-binary==2.9.9
+redis==5.1.1
+hiredis==3.0.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+python-multipart==0.0.12
+cryptography==43.0.1
+httpx==0.27.2
+google-generativeai==0.8.3
+pillow==10.4.0
+pypdf==5.0.1
+pytesseract==0.3.13
+loguru==0.7.2
+slowapi==0.1.9
+email-validator==2.2.0
+python-dotenv==1.0.1
+boto3==1.35.36
+stripe==11.1.0
+
+# === Security hardening v2 ===
+sentry-sdk[fastapi]==2.18.0          # Erreurs + perf monitoring
+python-json-logger==2.0.7            # Structured JSON logs (Loki-ready)
+itsdangerous==2.2.0                  # CSRF tokens signés

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.simplif-ia.fr wss://api.simplif-ia.fr https://api.elevenlabs.io https://api-adresse.data.gouv.fr https://recherche-entreprises.api.gouv.fr; media-src 'self' blob:; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connexion · Simplif'IA France</title>
+<meta name="description" content="Connectez-vous à votre espace Simplif'IA France via FranceConnect+ ou email.">
+<meta property="og:title" content="Connexion · Simplif'IA France">
+<meta property="og:description" content="Connectez-vous à votre espace Simplif'IA France via FranceConnect+ ou email.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplif-ia.fr/connexion.html">
+<meta property="og:image" content="https://simplif-ia.fr/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Connexion · Simplif'IA France">
+<meta name="twitter:description" content="Connectez-vous à votre espace Simplif'IA France via FranceConnect+ ou email.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/marbre-stars.css">
+<link rel="stylesheet" href="assets/elegance.css">
+<style>
+  body { background: linear-gradient(135deg, #FAFAFC 0%, #F0F0FA 100%); min-height: 100vh; }
+  .auth-wrap { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+  @media (max-width: 900px) { .auth-wrap { grid-template-columns: 1fr; } .auth-side { display: none; } }
+  .auth-form-side { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .auth-form { max-width: 420px; margin: 0 auto; width: 100%; }
+  .auth-form h1 { font-size: 32px; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .auth-form p.sub { color: var(--text-soft); margin-bottom: 32px; }
+  .auth-side {
+    background: linear-gradient(160deg, var(--bleu), var(--bleu-clair));
+    color: white; padding: 60px; display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .auth-side::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(255,255,255,0.15), transparent 50%);
+  }
+  .auth-side h2 { color: white; font-size: 36px; margin-bottom: 16px; position: relative; }
+  .auth-side p { font-size: 17px; opacity: 0.9; line-height: 1.7; position: relative; }
+  .auth-side ul { list-style: none; margin-top: 32px; position: relative; }
+  .auth-side li { padding: 12px 0; font-size: 15px; display: flex; gap: 12px; align-items: center; }
+  .auth-side li::before { content: '✓'; background: white; color: var(--bleu); width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+  .fc-btn {
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair));
+    color: white; padding: 16px 22px; border-radius: 12px;
+    width: 100%; display: flex; align-items: center; gap: 14px; justify-content: center;
+    font-weight: 800; font-size: 16px; text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0,0,145,0.25);
+    transition: all 0.2s; border: none; cursor: pointer; font-family: inherit;
+    margin-bottom: 18px;
+  }
+  .fc-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 32px rgba(0,0,145,0.35); }
+  .fc-mark { width: 32px; height: 32px; border-radius: 6px; background: linear-gradient(135deg,#fff 0%,#fff 33%,#fff 33%,#fff 66%,var(--rouge) 66%); }
+  .divider { display: flex; align-items: center; gap: 14px; margin: 24px 0; color: var(--text-mute); font-size: 13px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .checkbox-row { display: flex; gap: 8px; align-items: center; margin: 14px 0; font-size: 13px; color: var(--text-soft); }
+  .auth-foot { margin-top: 24px; text-align: center; font-size: 14px; color: var(--text-soft); }
+  .back-home { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 32px; color: var(--text-soft); font-size: 13px; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-form-side">
+    <div class="auth-form">
+      <a href="index.html" class="back-home">← Retour à l'accueil</a>
+      <h1>Bon retour !</h1>
+      <p class="sub">Connectez-vous pour reprendre vos démarches là où vous les avez laissées.</p>
+
+      <button class="fc-btn" onclick="alert('🔐 Redirection vers FranceConnect+\\n\\nVous serez identifié de manière forte (niveau eIDAS substantiel) via votre Identité Numérique La Poste, vos impôts, ou Ameli.')">
+        <div class="fc-mark"></div>
+        S'identifier avec FranceConnect+
+      </button>
+
+      <div class="divider">ou avec votre email</div>
+
+      <form onsubmit="event.preventDefault();alert('Connexion en cours…');window.location.href='app.html';">
+        <div class="form-group">
+          <label class="form-label" for="email">Adresse email</label>
+          <input type="email" id="email" class="form-input" placeholder="vous@exemple.fr" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="remember">
+          <label for="remember">Rester connecté 30 jours</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Se connecter</button>
+      </form>
+
+      <p class="auth-foot">
+        <a href="mot-de-passe-oublie.html">Mot de passe oublié ?</a>
+      </p>
+      <p class="auth-foot">
+        Pas encore de compte ? <a href="inscription.html"><strong>Créer un compte</strong></a>
+      </p>
+    </div>
+  </div>
+
+  <div class="auth-side">
+    <h2>Reprenez la main sur votre admin.</h2>
+    <p>Tout votre quotidien administratif géré par une IA juridique sourcée par la loi française.</p>
+    <ul>
+      <li>74 catégories de documents centralisés et chiffrés</li>
+      <li>Maître Léa répond à toutes vos questions juridiques</li>
+      <li>Sophie traite vos emails admin 24h/24</li>
+      <li>Lettres recommandées électroniques en 30 secondes</li>
+      <li>Hébergement souverain · 100 % France</li>
+    </ul>
+  </div>
+</div>
+<script src="assets/search.js" defer></script>
+<script src="assets/themes.js" defer></script>
+<script src="assets/polish.js" defer></script>
+</body></html>

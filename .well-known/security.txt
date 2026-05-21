@@ -1,0 +1,14 @@
+Contact: mailto:security@simplif-ia.fr
+Contact: https://yeswehack.com/programs/simplif-ia-france
+Expires: 2027-12-31T23:59:59.000Z
+Encryption: https://simplif-ia.fr/.well-known/pgp-key.txt
+Acknowledgments: https://simplif-ia.fr/securite.html#hall-of-fame
+Policy: https://simplif-ia.fr/securite.html
+Hiring: https://simplif-ia.fr/carrieres.html
+Preferred-Languages: fr, en
+Canonical: https://simplif-ia.fr/.well-known/security.txt
+
+# Bug Bounty Program
+# Range: 50€ – 5000€ depending on CVSS 3.1 severity
+# SLA: First response < 24h, Critical fix < 72h
+# Hall of Fame published quarterly

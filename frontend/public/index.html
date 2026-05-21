@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Simplif'IA France · Vos démarches enfin simples</title>
+<meta name="description" content="L'État vous parle un langage. Notre IA juridique le traduit, remplit vos CERFA et envoie vos lettres recommandées. En 3 clics, depuis votre canapé. 14 jours gratuits.">
+<link rel="canonical" href="https://simplif-ia.fr/">
+<meta property="og:title" content="Simplif'IA France · Vos démarches enfin simples">
+<meta property="og:description" content="L'IA juridique qui traduit, remplit et envoie vos démarches admin. En 3 clics, depuis votre canapé.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplif-ia.fr/">
+<meta property="og:image" content="https://simplif-ia.fr/assets/og-image.png">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Simplif'IA France">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Simplif'IA France · Vos démarches enfin simples">
+<meta name="twitter:description" content="L'IA juridique qui traduit, remplit et envoie vos démarches admin. En 3 clics.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Simplif'IA France",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Plateforme française de simplification administrative assistée par IA.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Simplif'IA France SAS",
+    "url": "https://simplif-ia.fr"
+  }
+}
+</script>
+<style>
+  :root {
+    --bleu: #000091;
+    --bleu-clair: #6A6AF4;
+    --bleu-pale: #E3E3FD;
+    --rouge: #E1000F;
+    --vert: #18753C;
+    --orange: #FF6F00;
+    --bg: #FAFAFC;
+    --text: #161616;
+    --text-soft: #555;
+    --border: #E5E5E5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  /* Bandeau tricolore en haut · identité France globale */
+  html::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #0055A4 0% 33.33%, #FFFFFF 33.33% 66.66%, #EF4135 66.66%);
+    z-index: 9999; pointer-events: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  body {
+    font-family: 'Marianne', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--text); background: var(--bg); line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* === NAV === */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    background: rgba(250,250,252,0.85);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 14px 32px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 17px; color: var(--bleu); }
+  .nav-mark {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(90deg, #0055A4 0% 33.33%, #FFFFFF 33.33% 66.66%, #EF4135 66.66%);
+    box-shadow: 0 2px 8px rgba(0,0,145,0.25);
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: var(--text); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--bleu); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; border: none; cursor: pointer;
+    font-family: inherit; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--bleu); color: white; }
+  .btn-primary:hover { background: #00006e; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,145,0.3); }
+  .btn-ghost { background: transparent; color: var(--text); }
+  .btn-ghost:hover { background: rgba(0,0,0,0.05); }
+  .btn-lg { padding: 16px 32px; font-size: 16px; }
+  .btn-white { background: white; color: var(--bleu); }
+  .btn-white:hover { background: rgba(255,255,255,0.95); transform: translateY(-1px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+  /* === HERO === */
+  .hero {
+    padding: 140px 32px 80px; position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 80% 20%, rgba(106,106,244,0.20), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 10% 90%, rgba(225,0,15,0.10), transparent 60%),
+      linear-gradient(180deg, #FAFAFC 0%, #F0F0FA 100%);
+  }
+  .hero-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--bleu); padding: 8px 16px;
+    border-radius: 999px; font-size: 13px; font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    border: 1px solid var(--border); margin-bottom: 24px;
+  }
+  .badge .dot { width: 8px; height: 8px; background: var(--vert); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 50% { opacity: 0.4; } }
+  h1 {
+    font-size: 64px; line-height: 1.05; letter-spacing: -2px;
+    font-weight: 800; margin-bottom: 24px;
+  }
+  @media (max-width: 600px) { h1 { font-size: 42px; letter-spacing: -1px; } }
+  h1 .accent {
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair) 70%, var(--rouge));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub { font-size: 19px; color: var(--text-soft); margin-bottom: 36px; max-width: 540px; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .hero-trust { display: flex; align-items: center; gap: 24px; font-size: 13px; color: var(--text-soft); flex-wrap: wrap; }
+  .hero-trust strong { color: var(--text); }
+  /* Hero phone mockup */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 600px; position: relative;
+  }
+  .hero-visual::before {
+    content: ''; position: absolute; width: 480px; height: 480px;
+    border-radius: 50%; max-width: 90%; max-height: 90%;
+    background: radial-gradient(circle, rgba(106,106,244,0.25), transparent 60%);
+    filter: blur(40px); z-index: 0;
+  }
+  .phone {
+    position: relative; width: 320px; height: 640px;
+    background: #0a0a23; border-radius: 44px;
+    box-shadow:
+      0 0 0 12px #1a1a2e,
+      0 30px 80px rgba(0,0,145,0.35),
+      0 50px 120px rgba(0,0,0,0.3);
+    overflow: hidden; z-index: 1;
+  }
+  .phone::before {
+    content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 110px; height: 28px; background: #0a0a23; border-radius: 0 0 16px 16px; z-index: 10;
+  }
+  .phone-screen {
+    position: absolute; inset: 0; background: linear-gradient(180deg, #f0f4ff 0%, #ffffff 100%);
+    overflow: hidden;
+  }
+  .phone-status {
+    position: absolute; top: 0; left: 0; right: 0; height: 44px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 14px 28px 0; font-size: 13px; font-weight: 700; z-index: 5;
+  }
+  .phone-content {
+    position: absolute; top: 44px; left: 0; right: 0; bottom: 0;
+    padding: 16px;
+  }
+  .phone-slide {
+    position: absolute; inset: 16px; opacity: 0; transform: translateX(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .phone-slide.active { opacity: 1; transform: none; }
+  /* Slide 1 - notification */
+  .notif {
+    background: white; border-radius: 14px; padding: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,145,0.10);
+    animation: slideIn 0.4s ease 0.2s both;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+  .notif-head { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #888; margin-bottom: 8px; }
+  .notif-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .notif-body { font-size: 12px; color: #555; line-height: 1.4; }
+  .notif-tag {
+    display: inline-block; background: var(--orange); color: white;
+    padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700;
+    margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  /* Slide 2 - chat */
+  .chat-bubble {
+    max-width: 80%; padding: 10px 14px; border-radius: 16px;
+    font-size: 12px; line-height: 1.4;
+  }
+  .chat-bubble.bot {
+    background: var(--bleu-pale); color: #161616; align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-bubble.user {
+    background: var(--bleu); color: white; align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .typing-dots { display: inline-flex; gap: 4px; }
+  .typing-dots span {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--bleu);
+    animation: dot 1.2s infinite; opacity: 0.4;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dot { 50% { opacity: 1; transform: translateY(-3px); } }
+  /* Slide 3 - cerfa filling */
+  .cerfa-mock {
+    background: white; border-radius: 12px; padding: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+  .cerfa-mock-head {
+    font-size: 10px; color: #666; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 10px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu);
+  }
+  .cerfa-mock-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; font-size: 11px; border-bottom: 1px dashed #eee;
+  }
+  .cerfa-mock-row:last-child { border: none; }
+  .cerfa-mock-row .check {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--vert); color: white;
+    display: flex; align-items: center; justify-content: center; font-size: 10px;
+    animation: pop 0.4s ease both;
+  }
+  @keyframes pop {
+    0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); }
+  }
+  .cerfa-mock-row:nth-child(2) .check { animation-delay: 0.4s; }
+  .cerfa-mock-row:nth-child(3) .check { animation-delay: 0.7s; }
+  .cerfa-mock-row:nth-child(4) .check { animation-delay: 1s; }
+  .cerfa-mock-row:nth-child(5) .check { animation-delay: 1.3s; }
+  /* Slide 4 - LRE sent */
+  .lre-sent {
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair));
+    color: white; border-radius: 16px; padding: 24px; text-align: center;
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .plane {
+    font-size: 56px; animation: fly 1.5s ease both;
+  }
+  @keyframes fly {
+    0% { transform: translate(-40px, 30px) rotate(-30deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  }
+  .lre-sent h4 { font-size: 17px; margin: 12px 0 6px; }
+  .lre-sent p { font-size: 11px; opacity: 0.9; line-height: 1.5; }
+  .lre-stamp-badge {
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+    padding: 4px 10px; border-radius: 999px; font-size: 9px; font-weight: 700;
+    margin-top: 12px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  /* Avatar bubble in chat */
+  .avatar-mini {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 13px;
+  }
+  .chat-line { display: flex; gap: 8px; align-items: flex-end; }
+  /* Phone slide indicator */
+  .phone-dots {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 5;
+  }
+  .phone-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0,0,145,0.2); transition: all 0.3s;
+  }
+  .phone-dot.active { background: var(--bleu); width: 20px; border-radius: 3px; }
+  /* Floating badges around phone */
+  .float-badge {
+    position: absolute; background: white; border-radius: 14px;
+    padding: 12px 16px; box-shadow: 0 12px 30px rgba(0,0,145,0.18);
+    display: flex; align-items: center; gap: 10px; z-index: 2;
+    border: 1px solid rgba(255,255,255,0.8);
+  }
+  .float-badge.fb-1 {
+    top: 60px; left: -40px; animation: floaty 6s ease-in-out infinite;
+  }
+  .float-badge.fb-2 {
+    bottom: 100px; right: -50px; animation: floaty 7s ease-in-out infinite reverse;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); }
+  }
+  .fb-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--bleu-pale), #d6d6f8);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .fb-text strong { font-size: 13px; display: block; }
+  .fb-text span { font-size: 11px; color: var(--text-soft); }
+  @media (max-width: 980px) {
+    .float-badge.fb-1 { left: 0; }
+    .float-badge.fb-2 { right: 0; }
+  }
+  @media (max-width: 500px) {
+    .phone { width: 280px; height: 560px; }
+    .float-badge.fb-1 { left: -10px; }
+    .float-badge.fb-2 { right: -10px; }
+  }
+  /* === STATS BAR === */
+  .stats-bar {
+    background: white; padding: 32px; border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0,0,145,0.06);
+    max-width: 1100px; margin: -40px auto 0; position: relative; z-index: 5;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 800px) { .stats-bar { grid-template-columns: repeat(2, 1fr); } }
+  .stat-item { text-align: center; padding: 8px; }
+  .stat-num {
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--bleu), var(--bleu-clair));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-soft); font-weight: 500; }
+  /* === SECTIONS === */
+  section { padding: 100px 32px; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; background: var(--bleu-pale); color: var(--bleu);
+    padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 44px; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 600px) { h2 { font-size: 32px; } }
+  .section-sub { font-size: 18px; color: var(--text-soft); max-width: 680px; margin-bottom: 56px; }
+  .center { text-align: center; margin-left: auto; margin-right: auto; }
+  /* === PROBLEM/SOLUTION === */
+  .compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  @media (max-width: 800px) { .compare { grid-template-columns: 1fr; } }
+  .compare-card {
+    padding: 36px; border-radius: 20px; position: relative;
+  }
+  .compare-card.bad {
+    background: #fff5f5; border: 1px solid #ffd6d6;
+  }
+  .compare-card.good {
+    background: linear-gradient(160deg, var(--bleu) 0%, var(--bleu-clair) 100%);
+    color: white; box-shadow: 0 30px 60px rgba(0,0,145,0.25);
+  }
+  .compare-card h3 { font-size: 22px; margin-bottom: 24px; font-weight: 700; }
+  .compare-card.bad h3 { color: #B30000; }
+  .compare-list { list-style: none; }
+  .compare-list li { padding: 10px 0; display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+  .compare-list li::before {
+    content: ''; width: 22px; height: 22px; border-radius: 50%;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; margin-top: 1px;
+  }
+  .compare-card.bad li::before { background: #fdd; color: #B30000; content: '✕'; }
+  .compare-card.good li::before { background: rgba(255,255,255,0.25); color: white; content: '✓'; }
+  /* === FEATURES === */
+  .features {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature {
+    background: white; padding: 32px; border-radius: 16px;
+    border: 1px solid var(--border); transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feature:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,145,0.10); border-color: var(--bleu-clair); }
+  .feature::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--bleu), var(--bleu-clair));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .feature:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--bleu-pale), #d6d6f8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 20px;
+  }
+  .feature h3 { font-size: 19px; margin-bottom: 10px; font-weight: 700; }
+  .feature p { color: var(--text-soft); font-size: 14px; line-height: 1.6; }
+  /* === HOW IT WORKS === */
+  .how {
+    background: linear-gradient(160deg, var(--bleu) 0%, #1a1a4a 100%);
+    color: white; padding: 100px 32px; border-radius: 24px;
+    margin: 32px;
+  }
+  .how h2 { color: white; }
+  .how .section-tag { background: rgba(255,255,255,0.15); color: white; }
+  .how .section-sub { color: rgba(255,255,255,0.8); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 32px; }
+  @media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
+  .step {
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 32px;
+    position: relative;
+  }
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: white; color: var(--bleu); font-weight: 800; font-size: 19px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+  }
+  .step h3 { font-size: 20px; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  /* === TRUST === */
+  .trust-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    background: white; padding: 32px; border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 700px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
+  .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px; }
+  .trust-icon { font-size: 32px; margin-bottom: 12px; }
+  .trust-name { font-weight: 700; font-size: 14px; }
+  .trust-desc { font-size: 12px; color: var(--text-soft); margin-top: 4px; }
+  /* === PRICING === */
+  .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .pricing { grid-template-columns: 1fr; } }
+  .price-card {
+    background: white; padding: 36px; border-radius: 20px;
+    border: 1px solid var(--border); position: relative; transition: all 0.2s;
+  }
+  .price-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+  .price-card.featured {
+    background: linear-gradient(160deg, var(--bleu), var(--bleu-clair));
+    color: white; border: none; transform: scale(1.03);
+    box-shadow: 0 30px 60px rgba(0,0,145,0.3);
+  }
+  .price-card.featured:hover { transform: scale(1.05) translateY(-3px); }
+  .price-card.featured .price-includes li::before { color: white; }
+  .price-tag {
+    position: absolute; top: -12px; right: 24px;
+    background: var(--rouge); color: white; padding: 4px 12px;
+    border-radius: 999px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .price-name { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 12px; }
+  .price-amount { font-size: 48px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+  .price-amount span { font-size: 16px; opacity: 0.7; font-weight: 500; }
+  .price-desc { font-size: 14px; opacity: 0.85; margin-bottom: 24px; }
+  .price-includes { list-style: none; margin-bottom: 28px; }
+  .price-includes li { padding: 8px 0; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .price-includes li::before { content: '✓'; color: var(--vert); font-weight: 700; }
+  .price-card .btn { width: 100%; justify-content: center; }
+  /* === TESTIMONIALS === */
+  .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .testimonials { grid-template-columns: 1fr; } }
+  .testi {
+    background: white; padding: 28px; border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .testi-quote { font-size: 15px; line-height: 1.7; margin-bottom: 20px; color: var(--text); }
+  .testi-quote::before { content: '"'; font-size: 40px; color: var(--bleu); line-height: 0.5; vertical-align: -15px; margin-right: 4px; font-family: Georgia; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--bleu), var(--rouge));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 14px;
+  }
+  .testi-name { font-weight: 700; font-size: 14px; }
+  .testi-role { font-size: 12px; color: var(--text-soft); }
+  /* === FAQ === */
+  .faq { max-width: 780px; margin: 0 auto; }
+  details {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 12px; padding: 20px 24px; transition: all 0.2s;
+  }
+  details[open] { box-shadow: 0 6px 20px rgba(0,0,145,0.06); border-color: var(--bleu-clair); }
+  summary {
+    cursor: pointer; font-weight: 700; font-size: 16px;
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+  }
+  summary::after { content: '+'; font-size: 24px; color: var(--bleu); transition: transform 0.2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin-top: 14px; color: var(--text-soft); font-size: 15px; line-height: 1.7; }
+  /* === FINAL CTA === */
+  .final-cta {
+    background: linear-gradient(135deg, var(--bleu), #1a1a4a 60%, var(--rouge));
+    color: white; padding: 100px 32px; text-align: center;
+    margin: 32px; border-radius: 24px; position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(255,255,255,0.15), transparent 50%);
+    pointer-events: none;
+  }
+  .final-cta h2 { color: white; font-size: 52px; margin-bottom: 20px; position: relative; }
+  .final-cta p { font-size: 18px; opacity: 0.9; margin-bottom: 36px; position: relative; }
+  /* === FOOTER === */
+  footer {
+    background: #0d0d2e; color: rgba(255,255,255,0.7); padding: 60px 32px 30px;
+    font-size: 14px;
+  }
+  .footer-grid {
+    max-width: 1180px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand { color: white; font-weight: 800; font-size: 18px; margin-bottom: 12px; }
+  .footer h4 { color: white; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .footer ul { list-style: none; }
+  .footer li { margin-bottom: 8px; }
+  .footer a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.15s; }
+  .footer a:hover { color: white; }
+  .footer-bottom {
+    max-width: 1180px; margin: 0 auto; padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px;
+  }
+  /* === ANIMATIONS === */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-mark"></div>
+    Simplif'IA <span style="color: var(--rouge); margin-left: -2px;">France</span>
+  </div>
+  <div class="nav-links" style="display: none;">
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#fonctionnement">Comment ça marche</a>
+    <a href="#tarifs">Tarifs</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#cta" class="btn btn-primary">Essayer gratuitement</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="badge"><span class="dot"></span> Service en bêta · 2 384 Français déjà inscrits</div>
+      <h1>Vos démarches admin,<br><span class="accent">enfin simples.</span></h1>
+      <p class="hero-sub">L'État vous parle un langage. Notre IA juridique le traduit, remplit vos CERFA et envoie vos lettres recommandées. En 3 clics, depuis votre canapé.</p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn btn-primary btn-lg">🔐 Commencer avec FranceConnect</a>
+        <a href="#fonctionnement" class="btn btn-ghost btn-lg">Voir comment ça marche →</a>
+      </div>
+      <div class="hero-trust">
+        <div>🇫🇷 <strong>100% français</strong></div>
+        <div>🔒 <strong>Chiffré AES-256</strong></div>
+        <div>⚖️ <strong>Conforme RGPD</strong></div>
+        <div>🆓 <strong>Sans engagement</strong></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="float-badge fb-1">
+        <div class="fb-icon">⚡</div>
+        <div class="fb-text"><strong>3 minutes</strong><span>au lieu de 4 heures</span></div>
+      </div>
+      <div class="float-badge fb-2">
+        <div class="fb-icon">💰</div>
+        <div class="fb-text"><strong>+ 1 247 €</strong><span>d'aides détectées /an</span></div>
+      </div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="phone-content">
+
+            <!-- Slide 1 : Notification reçue -->
+            <div class="phone-slide active" data-slide="0">
+              <div class="notif">
+                <div class="notif-head">📨 Nouveau courrier · à l'instant</div>
+                <div class="notif-title">Notification CAF reçue</div>
+                <div class="notif-body">Indu APL de 840 €. L'IA a détecté un délai de contestation.</div>
+                <span class="notif-tag">Urgent · 47 jours</span>
+              </div>
+              <div class="notif" style="animation-delay: 0.5s;">
+                <div class="notif-head">📖 Traduction en cours…</div>
+                <div class="notif-title">Niveau 1 : jargon administratif</div>
+                <div class="notif-body" style="font-size: 10px; font-style: italic;">"Conformément aux dispositions de l'article L553-1 du Code de la sécurité sociale…"</div>
+              </div>
+              <div class="notif" style="animation-delay: 0.9s; background: linear-gradient(135deg, #fff, #f0f4ff);">
+                <div class="notif-head">✨ Niveau 2 : version simple</div>
+                <div class="notif-body">La CAF vous demande de rembourser <strong>840 €</strong> car vos revenus 2025 étaient plus élevés que prévu.</div>
+              </div>
+            </div>
+
+            <!-- Slide 2 : Chat avec Maître Léa -->
+            <div class="phone-slide" data-slide="1">
+              <div class="chat-line">
+                <div class="avatar-mini">L</div>
+                <div class="chat-bubble bot">Bonjour Arnaud, je peux contester cet indu pour vous. Trois options selon votre situation.</div>
+              </div>
+              <div class="chat-line" style="justify-content: flex-end;">
+                <div class="chat-bubble user">Quelles options ?</div>
+              </div>
+              <div class="chat-line">
+                <div class="avatar-mini">L</div>
+                <div class="chat-bubble bot">
+                  1️⃣ Remise gracieuse<br>
+                  2️⃣ Recours préalable (RAPO)<br>
+                  3️⃣ Échéancier<br>
+                  Je recommande l'option 2.
+                </div>
+              </div>
+              <div class="chat-line" style="justify-content: flex-end;">
+                <div class="chat-bubble user">Va pour le RAPO 👍</div>
+              </div>
+              <div class="chat-line">
+                <div class="avatar-mini">L</div>
+                <div class="chat-bubble bot"><span class="typing-dots"><span></span><span></span><span></span></span></div>
+              </div>
+            </div>
+
+            <!-- Slide 3 : CERFA pré-rempli -->
+            <div class="phone-slide" data-slide="2">
+              <div class="cerfa-mock">
+                <div class="cerfa-mock-head">CERFA 15473*02 · Pré-remplissage</div>
+                <div class="cerfa-mock-row"><span>Nom · Prénom</span><div class="check">✓</div></div>
+                <div class="cerfa-mock-row"><span>Date de naissance</span><div class="check">✓</div></div>
+                <div class="cerfa-mock-row"><span>N° allocataire CAF</span><div class="check">✓</div></div>
+                <div class="cerfa-mock-row"><span>Adresse complète</span><div class="check">✓</div></div>
+                <div class="cerfa-mock-row"><span>Motif (rédigé par l'IA)</span><div class="check">✓</div></div>
+              </div>
+              <div style="background: var(--bleu-pale); border-radius: 12px; padding: 12px; font-size: 11px; color: var(--bleu); font-weight: 600; text-align: center;">
+                ✨ 17 champs remplis en 0,4 s
+              </div>
+            </div>
+
+            <!-- Slide 4 : LRE envoyée -->
+            <div class="phone-slide" data-slide="3">
+              <div class="lre-sent">
+                <div class="plane">✈️</div>
+                <h4>LRE envoyée !</h4>
+                <p>Votre recommandé électronique part vers la CAF de Paris.</p>
+                <div class="lre-stamp-badge">eIDAS qualifié</div>
+                <p style="margin-top: 14px; font-size: 10px;">Preuve de dépôt par email · Coût 4,68 €</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="phone-dots">
+            <div class="phone-dot active"></div>
+            <div class="phone-dot"></div>
+            <div class="phone-dot"></div>
+            <div class="phone-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">13M</div>
+    <div class="stat-label">Français en difficulté admin</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4,2 Md€</div>
+    <div class="stat-label">d'aides non réclamées chaque année</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">27h</div>
+    <div class="stat-label">par an perdues en démarches</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3 min</div>
+    <div class="stat-label">pour traiter un courrier admin chez nous</div>
+  </div>
+</div>
+
+<!-- PROBLEM / SOLUTION -->
+<section id="probleme">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Le problème</div>
+      <h2>L'admin française : 3 lettres = 3 nuits blanches.</h2>
+      <p class="section-sub center">90 % des courriers de la CAF, des impôts ou de la sécu sont écrits dans un jargon que même les juristes peinent à comprendre. Résultat : 1 français sur 3 abandonne ses droits.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-card bad">
+        <h3>😰 Sans Simplif'IA</h3>
+        <ul class="compare-list">
+          <li>Vous cherchez sur Google, vous tombez sur 12 réponses contradictoires</li>
+          <li>Vous attendez 2h au téléphone de la CAF, on vous transfère, on raccroche</li>
+          <li>Vous payez 180 € à un avocat pour un courrier d'1 page</li>
+          <li>Vous remplissez 4 fois les mêmes infos dans 4 formulaires différents</li>
+          <li>Vous ratez le délai de 2 mois et perdez votre droit de contester</li>
+          <li>Vous abandonnez et vous payez les 840 € qu'on vous réclame à tort</li>
+        </ul>
+      </div>
+      <div class="compare-card good">
+        <h3>✨ Avec Simplif'IA</h3>
+        <ul class="compare-list">
+          <li>Vous photographiez le courrier · l'IA le traduit en 3 niveaux de lecture</li>
+          <li>Maître Léa vous explique vocalement vos options, sourcées par des textes de loi</li>
+          <li>Vos infos sont déjà dans votre coffre-fort · le CERFA se remplit tout seul</li>
+          <li>L'IA rédige votre recours en citant les bons articles juridiques</li>
+          <li>Une lettre recommandée électronique part en 30 secondes, valeur juridique pleine</li>
+          <li>Vous gardez vos 840 € et 4 heures de votre vie</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="fonctionnalites" style="background: white;">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Fonctionnalités</div>
+      <h2>Tout ce dont vous avez besoin, dans une seule app.</h2>
+      <p class="section-sub center">Une plateforme qui rassemble vos documents, parle avec vous, et agit à votre place quand vous le décidez.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎙️</div>
+        <h3>Avatar IA juridique</h3>
+        <p>Maître Léa vous parle en français naturel, vous écoute, et cite chaque réponse par un article de loi. Zéro hallucination.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📖</div>
+        <h3>Traducteur Anti-Jargon</h3>
+        <p>Trois niveaux de lecture pour chaque courrier : le texte brut, la version FALC simple, et l'urgence concrète à retenir.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📝</div>
+        <h3>CERFA pré-remplis</h3>
+        <p>L'IA extrait vos données par OCR depuis vos documents et remplit automatiquement n'importe quel formulaire administratif français.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>Coffre-fort chiffré</h3>
+        <p>74 documents administratifs centralisés et chiffrés AES-256. Vous seul avez la clé. Même nous ne pouvons pas les lire.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✉️</div>
+        <h3>Lettre Recommandée Électronique</h3>
+        <p>Envoyez une LRE La Poste (AR24) avec preuve eIDAS qualifiée en 30 secondes. Pleine valeur juridique pour 4,68 €.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖱️</div>
+        <h3>Démarches clic-par-clic</h3>
+        <p>L'agent navigue les sites publics à votre place. Mode co-pilote : vous validez chaque action sensible avant l'envoi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="fonctionnement" style="padding: 0;">
+  <div class="how">
+    <div class="container center">
+      <div class="section-tag">Comment ça marche</div>
+      <h2>3 étapes. 3 minutes. C'est tout.</h2>
+    </div>
+    <div class="container">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>📸 Vous prenez en photo</h3>
+          <p>Le courrier de la CAF, votre fiche de paie, votre avis d'imposition. Notre IA Vision lit tout, même flou ou mal cadré.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>💬 Vous discutez</h3>
+          <p>Maître Léa vous explique ce qui se passe, vos options, le risque, le délai. Posez toutes vos questions, par texte ou à la voix.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>✅ Vous validez. C'est parti.</h3>
+          <p>Le CERFA est rempli, le recours rédigé, la LRE envoyée. Vous recevez la preuve d'envoi qualifiée eIDAS par email.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="securite">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Confiance</div>
+      <h2>Vos données sont sacrées. Voici comment on les protège.</h2>
+      <p class="section-sub center">Nous combinons les meilleurs standards de sécurité européens et l'engagement contractuel "zéro entraînement IA" sur vos données.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">🇫🇷</div>
+        <div class="trust-name">Hébergement souverain</div>
+        <div class="trust-desc">OVH · Scaleway · Outscale</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🛡️</div>
+        <div class="trust-name">RGPD + DPIA</div>
+        <div class="trust-desc">Audit CNIL annuel</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔐</div>
+        <div class="trust-name">Chiffrement AES-256</div>
+        <div class="trust-desc">Clés AWS KMS · zéro accès admin</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🚫</div>
+        <div class="trust-name">Zéro entraînement</div>
+        <div class="trust-desc">API Enterprise contractuelle</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🆔</div>
+        <div class="trust-name">FranceConnect+</div>
+        <div class="trust-desc">Identité Numérique La Poste</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📩</div>
+        <div class="trust-name">AR24 La Poste</div>
+        <div class="trust-desc">LRE qualifiée eIDAS</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">⚖️</div>
+        <div class="trust-name">RAG officiel</div>
+        <div class="trust-desc">Légifrance · Service-Public.fr</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🏥</div>
+        <div class="trust-name">HDS-ready</div>
+        <div class="trust-desc">Données de santé sécurisées</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background: white;">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Ils en parlent</div>
+      <h2>Ce que disent nos premiers utilisateurs.</h2>
+    </div>
+    <div class="testimonials">
+      <div class="testi">
+        <div class="testi-quote">J'avais reçu un indu CAF de 1 200 €. En 15 minutes l'IA m'a expliqué que c'était une erreur de calcul, a rédigé le recours avec les bons articles, et envoyé la LRE. La CAF a fait machine arrière 3 semaines plus tard.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">SM</div>
+          <div><div class="testi-name">Sophie M.</div><div class="testi-role">Infirmière, 41 ans · Lyon</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-quote">Pour mon père de 78 ans, c'est une révolution. Il met le courrier devant la caméra, l'avatar lui explique avec une voix douce, et lui dit quoi faire. Plus besoin de l'aider tous les mois.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">KT</div>
+          <div><div class="testi-name">Karim T.</div><div class="testi-role">Aidant familial · Marseille</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-quote">Auto-entrepreneur depuis 4 ans, je galérais avec les déclarations URSSAF, l'impôt, les attestations. Aujourd'hui tout est dans mon coffre, je ne touche plus à un PDF.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">EL</div>
+          <div><div class="testi-name">Élodie L.</div><div class="testi-role">Graphiste indépendante · Bordeaux</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="tarifs">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Tarifs</div>
+      <h2>Un prix juste, pour tout le monde.</h2>
+      <p class="section-sub center">Gratuit pour les bénéficiaires des minima sociaux (vérifié par avis d'imposition). Parce que ceux qui en ont le plus besoin ne devraient pas payer.</p>
+    </div>
+    <div class="pricing">
+      <div class="price-card">
+        <div class="price-name">Découverte</div>
+        <div class="price-amount">0 €<span>/mois</span></div>
+        <p class="price-desc">Pour découvrir et traiter quelques démarches simples.</p>
+        <ul class="price-includes">
+          <li>3 documents traduits par mois</li>
+          <li>Coffre-fort jusqu'à 10 documents</li>
+          <li>Avatar IA juridique</li>
+          <li>Voix synthétique standard</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost" style="border: 1px solid var(--border);">Commencer</a>
+      </div>
+      <div class="price-card featured">
+        <span class="price-tag">★ Le plus choisi</span>
+        <div class="price-name" style="color: white;">Premium</div>
+        <div class="price-amount">9,99 €<span>/mois</span></div>
+        <p class="price-desc">Tout l'accompagnement administratif au quotidien.</p>
+        <ul class="price-includes">
+          <li>Documents et CERFA <strong>illimités</strong></li>
+          <li>Coffre-fort illimité chiffré AES-256</li>
+          <li>Voix premium ElevenLabs</li>
+          <li>3 LRE AR24 incluses /mois</li>
+          <li>Mode FALC + accessibilité totale</li>
+          <li>Détection automatique des aides oubliées</li>
+        </ul>
+        <a href="#cta" class="btn btn-white">Démarrer 14 jours gratuits</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Pro / Aidants</div>
+        <div class="price-amount">49 €<span>/mois</span></div>
+        <p class="price-desc">Pour assistants sociaux, RH, experts-comptables.</p>
+        <ul class="price-includes">
+          <li>Tout le Premium</li>
+          <li>Multi-dossiers (jusqu'à 50 personnes)</li>
+          <li>Tableau de bord équipe</li>
+          <li>API et intégrations</li>
+          <li>Support dédié 5j/7</li>
+          <li>Formation incluse</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost" style="border: 1px solid var(--border);">Demander une démo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background: white;">
+  <div class="container">
+    <div class="center" style="max-width: 720px; margin: 0 auto 56px;">
+      <div class="section-tag">Questions fréquentes</div>
+      <h2>Tout ce que vous voulez savoir.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Est-ce que l'IA peut me donner un conseil juridique ?</summary>
+        <p>Simplif'IA est un <strong>outil</strong>, pas un cabinet d'avocats. L'IA vous présente les options légales prévues par les textes officiels, mais ne remplace pas un conseil personnalisé d'avocat. Pour les dossiers complexes, nous vous mettons en relation avec un avocat partenaire.</p>
+      </details>
+      <details>
+        <summary>Mes documents sont-ils vraiment privés ?</summary>
+        <p>Oui. Vos documents sont chiffrés en <strong>AES-256</strong> avant même d'arriver sur nos serveurs. La clé de déchiffrement n'est jamais stockée chez nous : elle est dérivée de votre passphrase FranceConnect. Concrètement, même nos administrateurs ne peuvent pas ouvrir vos fichiers.</p>
+      </details>
+      <details>
+        <summary>L'IA hallucine-t-elle parfois ?</summary>
+        <p>Notre IA fonctionne en mode <strong>RAG strict</strong> : elle ne peut citer que des textes existants dans la base officielle (Légifrance, Service-Public.fr, BOFiP). Si une information n'existe pas dans cette base, elle vous dit qu'elle ne sait pas plutôt que d'inventer.</p>
+      </details>
+      <details>
+        <summary>Une LRE Électronique a-t-elle vraiment la même valeur qu'un recommandé papier ?</summary>
+        <p>Oui, depuis 2018, la <strong>LRE qualifiée eIDAS</strong> (Lettre Recommandée Électronique) a exactement la même valeur juridique qu'un recommandé papier, partout en Europe. Nous passons par AR24, l'opérateur agréé de La Poste.</p>
+      </details>
+      <details>
+        <summary>Et si je gagne moins de 12 000 € par an ?</summary>
+        <p>Le service Premium est <strong>gratuit</strong> pour les bénéficiaires des minima sociaux. Il vous suffit d'uploader votre avis d'imposition pour activer la gratuité automatiquement. Notre conviction : ceux qui en ont le plus besoin ne devraient pas payer pour accéder à leurs droits.</p>
+      </details>
+      <details>
+        <summary>Puis-je annuler à tout moment ?</summary>
+        <p>Oui, sans frais ni délai. Un seul clic dans vos paramètres. Vous gardez l'accès jusqu'à la fin de la période payée, puis vous repassez en plan gratuit. Vos documents restent dans votre coffre-fort, accessibles en lecture.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta" style="padding: 0;">
+  <div class="final-cta">
+    <h2>Reprenez la main<br>sur votre admin.</h2>
+    <p>Inscription en 30 secondes via FranceConnect. 14 jours gratuits, sans carte bancaire.</p>
+    <a href="inscription.html" class="btn btn-white btn-lg" style="position: relative;">🔐 Démarrer maintenant</a>
+    <div style="margin-top: 32px; opacity: 0.7; font-size: 13px; position: relative;">Déjà inscrit ? <a href="connexion.html" style="color: white; text-decoration: underline;">Connexion</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Simplif'IA France</div>
+      <p style="margin-bottom: 16px;">Le guichet unique administratif assisté par IA, pensé pour tous les Français.</p>
+      <p style="font-size: 12px;">Société française · SAS au capital de 50 000 €<br>RCS Paris · Conforme RGPD · Hébergement souverain</p>
+    </div>
+    <div>
+      <h4>Produit</h4>
+      <ul>
+        <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="prototype.html">Démo interactive</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Société</h4>
+      <ul>
+        <li><a href="apropos.html">À propos</a></li>
+        <li><a href="carrieres.html">Carrières</a></li>
+        <li><a href="presse.html">Presse</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="cgu.html">CGU</a></li>
+        <li><a href="confidentialite.html">Politique de confidentialité</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="confidentialite.html#dpia">DPIA / RGPD</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Simplif'IA France · Tous droits réservés</div>
+    <div>🇫🇷 Made in France · Hébergé en France</div>
+  </div>
+</footer>
+
+<script>
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('section, .stats-bar, .compare-card, .feature, .step, .testi, .price-card').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+  // Show nav links on desktop
+  function updateNav() {
+    document.querySelector('.nav-links').style.display = window.innerWidth > 800 ? 'flex' : 'none';
+  }
+  updateNav();
+  window.addEventListener('resize', updateNav);
+
+  // Phone slide cycling
+  const slides = document.querySelectorAll('.phone-slide');
+  const dots = document.querySelectorAll('.phone-dot');
+  let currentSlide = 0;
+  let slideTimer = null;
+
+  function showSlide(idx) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // Re-trigger animations inside the active slide
+    const active = slides[idx];
+    if (active) {
+      const animated = active.querySelectorAll('.notif, .check, .plane, .chat-line');
+      animated.forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // reflow
+        el.style.animation = '';
+      });
+    }
+    currentSlide = idx;
+  }
+
+  function nextSlide() {
+    showSlide((currentSlide + 1) % slides.length);
+  }
+
+  function startSlideShow() {
+    if (slideTimer) clearInterval(slideTimer);
+    slideTimer = setInterval(nextSlide, 4500);
+  }
+  startSlideShow();
+
+  // Click on dots to navigate
+  dots.forEach((d, i) => {
+    d.style.cursor = 'pointer';
+    d.addEventListener('click', () => {
+      showSlide(i);
+      startSlideShow();
+    });
+  });
+
+  // Pause on hover, resume on leave
+  const phone = document.querySelector('.phone');
+  if (phone) {
+    phone.addEventListener('mouseenter', () => { if (slideTimer) clearInterval(slideTimer); });
+    phone.addEventListener('mouseleave', startSlideShow);
+  }
+
+  // Animate stat numbers counting up when visible
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.animated) {
+        e.target.dataset.animated = '1';
+        const finalText = e.target.textContent;
+        const num = parseFloat(finalText.replace(/[^\d.,]/g, '').replace(',', '.'));
+        if (!isNaN(num) && num > 0) {
+          let current = 0;
+          const step = num / 30;
+          const interval = setInterval(() => {
+            current += step;
+            if (current >= num) {
+              e.target.textContent = finalText;
+              clearInterval(interval);
+            } else {
+              const formatted = num >= 1000 ? Math.round(current).toLocaleString('fr-FR') : current.toFixed(num % 1 === 0 ? 0 : 1);
+              e.target.textContent = finalText.replace(/[\d.,]+/, formatted);
+            }
+          }, 40);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => statObserver.observe(el));
+</script>
+
+</body>
+</html>

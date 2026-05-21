@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simplif'IA France — Prototype</title>
+<meta name="description" content="Découvrez Simplif'IA France en mode démo : testez l'IA, parcourez l'application.">
+<meta property="og:title" content="Démo interactive · Simplif'IA France">
+<meta property="og:description" content="Découvrez Simplif'IA France en mode démo : testez l'IA, parcourez l'application.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simplif-ia.fr/prototype.html">
+<meta property="og:image" content="https://simplif-ia.fr/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Démo interactive · Simplif'IA France">
+<meta name="twitter:description" content="Découvrez Simplif'IA France en mode démo : testez l'IA, parcourez l'application.">
+
+<style>
+  :root {
+    --bleu-france: #000091;
+    --bleu-clair: #6A6AF4;
+    --bleu-pale: #E3E3FD;
+    --rouge-marianne: #E1000F;
+    --gris-fond: #F6F6F6;
+    --gris-bordure: #DDDDDD;
+    --gris-texte: #3A3A3A;
+    --vert-succes: #18753C;
+    --orange-alerte: #B34000;
+    --jaune-doux: #FEF3C7;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 32px rgba(0,0,145,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Marianne', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--gris-texte);
+    background: var(--gris-fond);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  /* HEADER */
+  .header {
+    background: white;
+    border-bottom: 4px solid var(--bleu-france);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .logo-block { display: flex; align-items: center; gap: 16px; }
+  .marianne {
+    width: 56px; height: 56px;
+    background: linear-gradient(90deg, #0055A4 0% 33.33%, #FFFFFF 33.33% 66.66%, #EF4135 66.66% 100%);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 900; font-size: 11px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    letter-spacing: -0.5px;
+  }
+  .logo-text h1 { font-size: 20px; font-weight: 800; color: var(--bleu-france); }
+  .logo-text p { font-size: 12px; color: #666; }
+  .user-block { display: flex; align-items: center; gap: 12px; }
+  .badge-fc {
+    background: var(--bleu-france); color: white;
+    padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600;
+  }
+  .user-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--bleu-clair), var(--bleu-france));
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700;
+  }
+  /* LAYOUT */
+  .container { max-width: 1280px; margin: 0 auto; padding: 24px; }
+  .grid { display: grid; gap: 20px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 900px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+  /* CARDS */
+  .card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--gris-bordure);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+  .card-title {
+    font-size: 14px; font-weight: 700; text-transform: uppercase;
+    color: #666; letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .card-value { font-size: 32px; font-weight: 800; color: var(--bleu-france); }
+  .card-sub { font-size: 13px; color: #666; margin-top: 4px; }
+  /* TABS */
+  .tabs {
+    display: flex; gap: 4px;
+    background: white; border-radius: 8px; padding: 6px;
+    margin-bottom: 24px; border: 1px solid var(--gris-bordure);
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 10px 16px; border-radius: 6px; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: #555;
+    border: none; background: transparent; white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bleu-pale); color: var(--bleu-france); }
+  .tab.active { background: var(--bleu-france); color: white; }
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  /* AVATAR */
+  .avatar-section { display: grid; grid-template-columns: 320px 1fr; gap: 24px; }
+  @media (max-width: 900px) { .avatar-section { grid-template-columns: 1fr; } }
+  .avatar-card {
+    background: linear-gradient(160deg, var(--bleu-france), var(--bleu-clair));
+    color: white; padding: 24px; border-radius: 12px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .avatar-svg {
+    width: 200px; height: 200px; margin: 0 auto 16px;
+    border-radius: 50%; background: rgba(255,255,255,0.1);
+    border: 3px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .avatar-pulse {
+    position: absolute; inset: -6px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+  .avatar-svg.speaking { box-shadow: 0 0 0 4px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.6); }
+  .avatar-svg.speaking .avatar-mouth { animation: talk 0.18s infinite alternate; }
+  @keyframes talk {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(2.2); }
+  }
+  .avatar-svg.listening { box-shadow: 0 0 0 4px rgba(225,0,15,0.5), 0 0 30px rgba(225,0,15,0.7); }
+  .voice-btn.active { background: var(--rouge-marianne); border-color: var(--rouge-marianne); }
+  .voice-btn.muted { opacity: 0.5; }
+  .speaking-bar {
+    display: none; height: 4px; background: rgba(255,255,255,0.2);
+    border-radius: 2px; overflow: hidden; margin-top: 12px;
+  }
+  .speaking-bar.active { display: block; }
+  .speaking-bar::after {
+    content: ''; display: block; height: 100%; width: 30%;
+    background: white; animation: bar 1s infinite;
+  }
+  @keyframes bar {
+    0% { margin-left: -30%; } 100% { margin-left: 100%; }
+  }
+  .avatar-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .avatar-role { font-size: 13px; opacity: 0.9; margin-bottom: 16px; }
+  .voice-controls { display: flex; gap: 8px; justify-content: center; }
+  .voice-btn {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px;
+    cursor: pointer; font-weight: 600;
+  }
+  .voice-btn:hover { background: rgba(255,255,255,0.25); }
+  /* CHAT */
+  .chat {
+    background: white; border-radius: 12px; border: 1px solid var(--gris-bordure);
+    height: 480px; display: flex; flex-direction: column;
+  }
+  .chat-header {
+    padding: 16px; border-bottom: 1px solid var(--gris-bordure);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chat-status { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .status-dot { width: 8px; height: 8px; background: var(--vert-succes); border-radius: 50%; }
+  .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+  .msg.bot { background: var(--bleu-pale); color: var(--gris-texte); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.user { background: var(--bleu-france); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg-cite {
+    margin-top: 8px; padding: 8px 10px; background: rgba(255,255,255,0.6);
+    border-left: 3px solid var(--bleu-france); border-radius: 4px;
+    font-size: 12px; color: #555;
+  }
+  .chat-input {
+    padding: 12px; border-top: 1px solid var(--gris-bordure);
+    display: flex; gap: 8px;
+  }
+  .chat-input input {
+    flex: 1; padding: 10px 14px; border: 1px solid var(--gris-bordure);
+    border-radius: 24px; font-size: 14px; outline: none;
+    font-family: inherit;
+  }
+  .chat-input input:focus { border-color: var(--bleu-france); }
+  .chat-input button {
+    background: var(--bleu-france); color: white; border: none;
+    padding: 10px 20px; border-radius: 24px; cursor: pointer; font-weight: 600;
+  }
+  .chat-input button:hover { background: #00006e; }
+  /* TRADUCTEUR */
+  .upload-zone {
+    border: 2px dashed var(--bleu-clair); border-radius: 12px;
+    padding: 40px; text-align: center; background: var(--bleu-pale);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .upload-zone:hover { background: #d4d4f8; border-color: var(--bleu-france); }
+  .upload-icon { font-size: 48px; margin-bottom: 12px; }
+  .three-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  @media (max-width: 900px) { .three-cols { grid-template-columns: 1fr; } }
+  .level {
+    background: white; border-radius: 8px; border: 1px solid var(--gris-bordure);
+    padding: 16px; height: 100%;
+  }
+  .level-1 { border-left: 4px solid #999; }
+  .level-2 { border-left: 4px solid var(--bleu-france); }
+  .level-3 { border-left: 4px solid var(--orange-alerte); background: var(--jaune-doux); }
+  .level-tag {
+    display: inline-block; padding: 4px 10px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    margin-bottom: 12px; letter-spacing: 0.5px;
+  }
+  .tag-1 { background: #eee; color: #555; }
+  .tag-2 { background: var(--bleu-pale); color: var(--bleu-france); }
+  .tag-3 { background: var(--orange-alerte); color: white; }
+  .level-content { font-size: 13px; line-height: 1.6; }
+  .level-content.jargon { font-family: 'Times New Roman', serif; color: #444; }
+  /* CERFA */
+  .cerfa-form {
+    background: white; border-radius: 8px; padding: 24px;
+    border: 1px solid var(--gris-bordure);
+  }
+  .cerfa-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 16px; margin-bottom: 20px;
+    border-bottom: 2px solid var(--bleu-france);
+  }
+  .cerfa-title h3 { color: var(--bleu-france); font-size: 18px; }
+  .cerfa-title p { font-size: 13px; color: #666; }
+  .cerfa-num {
+    background: var(--bleu-france); color: white;
+    padding: 6px 12px; border-radius: 4px;
+    font-family: 'Courier New', monospace; font-weight: 700;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+  @media (max-width: 700px) { .form-row { grid-template-columns: 1fr; } }
+  .form-field { display: flex; flex-direction: column; gap: 4px; }
+  .form-field label { font-size: 12px; font-weight: 600; color: #555; }
+  .form-field input {
+    padding: 10px 12px; border: 1px solid var(--gris-bordure);
+    border-radius: 4px; font-size: 14px; background: var(--bleu-pale);
+    font-family: inherit;
+  }
+  .auto-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--vert-succes); color: white;
+    padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700;
+    margin-left: 6px;
+  }
+  /* COFFRE-FORT */
+  .vault-search {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--gris-bordure);
+    border-radius: 8px; font-size: 14px; margin-bottom: 16px;
+    font-family: inherit;
+  }
+  .vault-search:focus { outline: none; border-color: var(--bleu-france); }
+  .vault-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .vault-filter {
+    padding: 6px 14px; border: 1px solid var(--gris-bordure); border-radius: 16px;
+    background: white; cursor: pointer; font-size: 13px; font-weight: 600;
+    color: #555; transition: all 0.15s; font-family: inherit;
+  }
+  .vault-filter:hover { border-color: var(--bleu-france); color: var(--bleu-france); }
+  .vault-filter.active { background: var(--bleu-france); color: white; border-color: var(--bleu-france); }
+  .vault-category {
+    margin-bottom: 28px;
+  }
+  .vault-cat-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--bleu-pale);
+  }
+  .vault-cat-header h3 {
+    color: var(--bleu-france); font-size: 16px; font-weight: 700;
+  }
+  .vault-cat-count {
+    background: var(--bleu-pale); color: var(--bleu-france);
+    padding: 2px 10px; border-radius: 10px; font-size: 12px; font-weight: 700;
+  }
+  .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .doc-tile {
+    background: white; border: 1px solid var(--gris-bordure);
+    border-radius: 8px; padding: 14px; cursor: pointer;
+    transition: all 0.2s; position: relative; display: flex; gap: 12px;
+  }
+  .doc-tile:hover { border-color: var(--bleu-france); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .doc-tile.missing { background: #fafafa; border-style: dashed; opacity: 0.85; }
+  .doc-tile.missing .doc-icon { filter: grayscale(1); opacity: 0.5; }
+  .doc-tile.expiring { border-left: 4px solid var(--orange-alerte); }
+  .doc-tile.expired { border-left: 4px solid var(--rouge-marianne); background: #fff5f5; }
+  .doc-icon {
+    font-size: 28px; flex-shrink: 0; line-height: 1;
+  }
+  .doc-info { flex: 1; min-width: 0; }
+  .doc-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; line-height: 1.3; }
+  .doc-meta { font-size: 11px; color: #888; }
+  .doc-status {
+    display: inline-block; padding: 1px 8px; border-radius: 8px;
+    font-size: 10px; font-weight: 700; margin-top: 4px;
+  }
+  .status-ok { background: #e8f5e8; color: var(--vert-succes); }
+  .status-warn { background: var(--jaune-doux); color: var(--orange-alerte); }
+  .status-err { background: #fde8e8; color: var(--rouge-marianne); }
+  .status-missing { background: #eee; color: #888; }
+  .lock-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--vert-succes); color: white;
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+  }
+  .doc-action-btn {
+    position: absolute; bottom: 8px; right: 8px;
+    background: var(--bleu-france); color: white; border: none;
+    padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+    cursor: pointer; opacity: 0; transition: opacity 0.15s;
+  }
+  .doc-tile:hover .doc-action-btn { opacity: 1; }
+  .vault-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .vault-stats { grid-template-columns: repeat(2, 1fr); } }
+  .vault-stat {
+    background: white; border-radius: 8px; padding: 12px 16px;
+    border: 1px solid var(--gris-bordure); text-align: center;
+  }
+  .vault-stat-num { font-size: 22px; font-weight: 800; }
+  .vault-stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+  /* LRE AR24 */
+  .lre-card {
+    background: linear-gradient(135deg, #fff, #f9f9ff);
+    border: 2px solid var(--bleu-france); border-radius: 12px;
+    padding: 24px; position: relative;
+  }
+  .lre-stamp {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--rouge-marianne); color: white;
+    padding: 8px 16px; border-radius: 4px;
+    font-weight: 700; font-size: 12px; transform: rotate(3deg);
+    box-shadow: var(--shadow-sm);
+  }
+  .lre-section { margin-bottom: 16px; }
+  .lre-label { font-size: 11px; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 4px; }
+  .lre-content { font-size: 14px; }
+  .lre-actions { display: flex; gap: 12px; margin-top: 24px; }
+  .btn {
+    padding: 12px 20px; border-radius: 6px; border: none;
+    font-weight: 600; cursor: pointer; font-size: 14px;
+    font-family: inherit; transition: all 0.15s;
+  }
+  .btn-primary { background: var(--bleu-france); color: white; }
+  .btn-primary:hover { background: #00006e; }
+  .btn-secondary { background: white; color: var(--bleu-france); border: 1px solid var(--bleu-france); }
+  .btn-secondary:hover { background: var(--bleu-pale); }
+  /* ALERT */
+  .alert {
+    padding: 12px 16px; border-radius: 6px; margin-bottom: 16px;
+    display: flex; gap: 12px; align-items: flex-start; font-size: 14px;
+  }
+  .alert-warning { background: var(--jaune-doux); border-left: 4px solid var(--orange-alerte); }
+  .alert-info { background: var(--bleu-pale); border-left: 4px solid var(--bleu-france); }
+  .alert-success { background: #e8f5e8; border-left: 4px solid var(--vert-succes); }
+  /* CLIC PAR CLIC */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+    width: 2px; background: var(--bleu-france);
+  }
+  .step {
+    position: relative; padding: 12px 16px; background: white;
+    border: 1px solid var(--gris-bordure); border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .step::before {
+    content: attr(data-step); position: absolute; left: -32px; top: 12px;
+    background: var(--bleu-france); color: white;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .step.done::before { background: var(--vert-succes); content: '✓'; }
+  .step.active { border-color: var(--bleu-france); box-shadow: var(--shadow-md); }
+  .step.active::before { background: var(--rouge-marianne); animation: pulse-step 1.5s infinite; }
+  @keyframes pulse-step {
+    0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); }
+  }
+  .step h4 { font-size: 14px; margin-bottom: 4px; }
+  .step p { font-size: 13px; color: #666; }
+  .step .browser-mock {
+    margin-top: 8px; background: #1e1e2e; color: #cdd6f4;
+    padding: 8px 12px; border-radius: 4px; font-family: 'Courier New', monospace;
+    font-size: 11px; line-height: 1.5;
+  }
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 22px; font-weight: 800; color: var(--bleu-france);
+    margin-bottom: 8px;
+  }
+  .section-sub { color: #666; margin-bottom: 24px; font-size: 14px; }
+  /* FOOTER */
+  .footer {
+    background: var(--bleu-france); color: white; padding: 20px;
+    text-align: center; font-size: 13px; margin-top: 40px;
+  }
+  .footer a { color: white; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-block">
+    <div class="marianne">RF</div>
+    <div class="logo-text">
+      <h1>Simplif'IA France</h1>
+      <p>Guichet unique administratif assisté par IA — Prototype v0.1</p>
+    </div>
+  </div>
+  <div class="user-block">
+    <span class="badge-fc">🔐 FranceConnect</span>
+    <div class="user-avatar">AD</div>
+    <div style="font-size: 13px;">
+      <div style="font-weight: 600;">Arnaud D.</div>
+      <div style="color: #888; font-size: 11px;">Coffre-fort sécurisé</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- DASHBOARD STATS -->
+  <div class="grid grid-3" style="margin-bottom: 24px;">
+    <div class="card">
+      <div class="card-title">Documents au coffre</div>
+      <div class="card-value">14</div>
+      <div class="card-sub">Chiffrés AES-256 · Synchronisés</div>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--orange-alerte);">
+      <div class="card-title" style="color: var(--orange-alerte);">⚠ Démarches urgentes</div>
+      <div class="card-value" style="color: var(--orange-alerte);">2</div>
+      <div class="card-sub">Échéance dans 7 jours</div>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--vert-succes);">
+      <div class="card-title" style="color: var(--vert-succes);">Aides détectées</div>
+      <div class="card-value" style="color: var(--vert-succes);">3</div>
+      <div class="card-sub">+ 1 247 € potentiels / an</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="avatar">🎙️ Avatar IA Juridique</button>
+    <button class="tab" data-tab="traducteur">📖 Traducteur Anti-Jargon</button>
+    <button class="tab" data-tab="cerfa">📝 Remplissage CERFA</button>
+    <button class="tab" data-tab="clicparclic">🖱️ Clic-par-clic Chrome</button>
+    <button class="tab" data-tab="coffre">🔒 Coffre-fort</button>
+    <button class="tab" data-tab="lre">✉️ LRE AR24</button>
+  </div>
+
+  <!-- AVATAR -->
+  <div class="panel active" id="panel-avatar">
+    <h2 class="section-title">Votre conseiller IA juridique personnel</h2>
+    <p class="section-sub">Avatar interactif (HeyGen API) connecté à une base RAG : Service-Public.fr, Légifrance, BOFiP, Codes officiels. Chaque réponse est sourcée par un texte de loi.</p>
+    <div class="avatar-section">
+      <div class="avatar-card">
+        <div class="avatar-svg">
+          <div class="avatar-pulse"></div>
+          <svg viewBox="0 0 100 100" width="160" height="160" id="avatarSvg">
+            <circle cx="50" cy="38" r="18" fill="#FFE0B2"/>
+            <path d="M30 70 Q50 55 70 70 L70 95 L30 95 Z" fill="#fff"/>
+            <circle cx="44" cy="36" r="2.5" fill="#333"/>
+            <circle cx="56" cy="36" r="2.5" fill="#333"/>
+            <ellipse class="avatar-mouth" cx="50" cy="46" rx="5" ry="1.5" fill="#a55" style="transform-origin: 50px 46px;"/>
+            <path d="M30 32 Q50 18 70 32 L68 28 Q50 14 32 28 Z" fill="#5A4A3A"/>
+            <rect x="46" y="60" width="8" height="6" fill="var(--rouge-marianne)"/>
+          </svg>
+        </div>
+        <div class="avatar-name">Maître Léa</div>
+        <div class="avatar-role">Conseillère juridique IA · RAG-only</div>
+        <div class="voice-controls">
+          <button class="voice-btn" id="btnMic">🎤 Parler</button>
+          <button class="voice-btn" id="btnSpeak">🔊 Voix ON</button>
+          <button class="voice-btn" id="btnStop">⏹ Stop</button>
+          <button class="voice-btn" id="btnFalc">FALC</button>
+        </div>
+        <div style="margin-top: 10px;">
+          <select id="voiceSelect" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 10px; border-radius: 16px; font-size: 11px; font-family: inherit; cursor: pointer; width: 100%;">
+            <optgroup label="🎙️ ElevenLabs (haute qualité)" style="color: #000;">
+              <option value="el:XB0fDUnXU5powFXDhCwa" selected>Charlotte (FR · douce)</option>
+              <option value="el:pFZP5JQG7iQjIQuC4Bku">Lily (FR · pro)</option>
+              <option value="el:Xb7hH8MSUJpSbSDYk0k2">Alice (FR · claire)</option>
+              <option value="el:EXAVITQu4vr4xnSDxMaL">Sarah (multi · chaleureuse)</option>
+              <option value="el:21m00Tcm4TlvDq8ikWAM">Rachel (multi · neutre)</option>
+              <option value="el:AZnzlk1XvdvUeBnXmlld">Domi (multi · jeune)</option>
+            </optgroup>
+            <optgroup label="🔈 Voix navigateur (gratuit)" style="color: #000;">
+              <option value="browser">Voix système (offline)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="speaking-bar" id="speakingBar"></div>
+        <div id="voiceStatus" style="font-size: 11px; opacity: 0.85; margin-top: 10px; min-height: 14px;"></div>
+      </div>
+      <div class="chat">
+        <div class="chat-header">
+          <strong>Conversation sécurisée</strong>
+          <div class="chat-status"><span class="status-dot"></span> En ligne · Mode RAG</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="msg bot">
+            Bonjour Arnaud, je vois que vous avez reçu un courrier de la CAF daté du 28 avril. Souhaitez-vous que je vous l'explique ou que nous préparions une réponse ?
+          </div>
+          <div class="msg user">
+            J'ai reçu une lettre disant que je dois rembourser 840 €. Je ne comprends pas pourquoi.
+          </div>
+          <div class="msg bot">
+            J'ai analysé le courrier. Il s'agit d'un <strong>indu APL</strong> (trop-perçu sur l'aide au logement) réclamé suite à une mise à jour de vos ressources 2025. Vous avez le droit de contester sous <strong>2 mois</strong>.
+            <div class="msg-cite">📎 Source : Code de la sécurité sociale, Art. L553-1 et CCAS Art. R262-90</div>
+          </div>
+          <div class="msg user">Quelles sont mes options ?</div>
+          <div class="msg bot">
+            Trois options selon votre situation :<br>
+            1️⃣ <strong>Demande de remise gracieuse</strong> (formulaire CERFA 15473)<br>
+            2️⃣ <strong>Recours administratif préalable</strong> (RAPO) sous 2 mois<br>
+            3️⃣ <strong>Échéancier de paiement</strong>  négocié<br>
+            Souhaitez-vous que je rédige le RAPO ?
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Posez votre question juridique…" id="chatInput">
+          <button onclick="sendMsg()">Envoyer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRADUCTEUR -->
+  <div class="panel" id="panel-traducteur">
+    <h2 class="section-title">Traducteur Anti-Jargon Universel</h2>
+    <p class="section-sub">Téléchargez un courrier administratif (PDF, photo). L'IA le restitue en 3 niveaux de lecture.</p>
+    <div class="upload-zone">
+      <div class="upload-icon">📄⬆️</div>
+      <strong>Glissez votre document ici</strong>
+      <p style="font-size: 13px; color: #666; margin-top: 4px;">PDF, JPG, PNG · OCR via Gemini Vision · Données chiffrées en transit</p>
+    </div>
+    <div style="margin-top: 24px; background: white; padding: 16px; border-radius: 8px; border: 1px solid var(--gris-bordure);">
+      <strong>📄 Exemple analysé :</strong> Notification d'indu CAF — 28/04/2026 (2 pages)
+    </div>
+    <div class="three-cols">
+      <div class="level level-1">
+        <span class="level-tag tag-1">1 · Texte d'origine</span>
+        <div class="level-content jargon">
+          « Conformément aux dispositions de l'article L. 553-1 du Code de la sécurité sociale, et suite au contrôle de cohérence de vos ressources déclarées au titre de l'année N-1, un indu d'un montant de 840,00 € a été constaté sur votre allocation de logement. La présente notification vaut titre exécutoire au sens de l'article L. 161-1-5 du même code. »
+        </div>
+      </div>
+      <div class="level level-2">
+        <span class="level-tag tag-2">2 · Traduction simple (FALC)</span>
+        <div class="level-content">
+          La CAF vous a versé <strong>840 €</strong> en trop pour votre aide au logement. C'est parce que vos revenus de l'an dernier étaient plus élevés que prévu. La CAF veut que vous remboursiez cette somme.
+        </div>
+      </div>
+      <div class="level level-3">
+        <span class="level-tag tag-3">3 · Impact & urgence</span>
+        <div class="level-content">
+          ⏰ <strong>Délai : 2 mois</strong> (avant le 28/06/2026)<br>
+          ⚠️ <strong>Risques en cas d'inaction :</strong> prélèvement direct sur vos prochaines APL<br>
+          ✅ <strong>À faire :</strong> contester si erreur, ou demander un échéancier
+          <button class="btn btn-primary" style="margin-top: 12px; width: 100%;">Lancer la contestation →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERFA -->
+  <div class="panel" id="panel-cerfa">
+    <h2 class="section-title">CERFA pré-rempli automatiquement</h2>
+    <p class="section-sub">L'IA extrait vos données depuis votre coffre-fort (avis d'imposition, fiche de paie) et remplit le formulaire. Vous validez avant envoi.</p>
+    <div class="alert alert-info">
+      <strong>ℹ️</strong>
+      <div>17 champs détectés et pré-remplis depuis vos documents. Champs en bleu = remplis automatiquement, à vérifier avant signature.</div>
+    </div>
+    <div class="cerfa-form">
+      <div class="cerfa-header">
+        <div class="cerfa-title">
+          <h3>Demande de remise gracieuse de dette</h3>
+          <p>Formulaire administratif CAF · Édition 2026</p>
+        </div>
+        <div class="cerfa-num">N° 15473*02</div>
+      </div>
+      <h4 style="color: var(--bleu-france); margin-bottom: 12px;">État civil <span class="auto-tag">✓ Pré-rempli</span></h4>
+      <div class="form-row">
+        <div class="form-field"><label>Nom de famille</label><input value="DURAND"></div>
+        <div class="form-field"><label>Prénom</label><input value="Arnaud"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Date de naissance</label><input value="14/03/1985"></div>
+        <div class="form-field"><label>N° allocataire CAF</label><input value="7842156"></div>
+      </div>
+      <h4 style="color: var(--bleu-france); margin: 20px 0 12px;">Adresse <span class="auto-tag">✓ Pré-rempli</span></h4>
+      <div class="form-row">
+        <div class="form-field" style="grid-column: 1 / -1;"><label>Adresse complète</label><input value="42 rue de la République, 75011 Paris"></div>
+      </div>
+      <h4 style="color: var(--bleu-france); margin: 20px 0 12px;">Motif de la demande</h4>
+      <div class="form-row">
+        <div class="form-field" style="grid-column: 1 / -1;">
+          <label>Exposé des faits (rédigé par l'IA · à valider)</label>
+          <textarea style="padding: 10px; border-radius: 4px; border: 1px solid var(--gris-bordure); background: var(--bleu-pale); font-family: inherit; font-size: 13px; min-height: 100px;">Je conteste l'indu APL de 840 € au motif que mes ressources 2025 ont été temporairement augmentées par une prime exceptionnelle non récurrente (Art. R831-6 CSS). Je sollicite la remise gracieuse compte tenu de ma situation actuelle de revenus stables inférieurs au plafond.</textarea>
+        </div>
+      </div>
+      <div class="lre-actions">
+        <button class="btn btn-primary">📥 Télécharger le PDF rempli</button>
+        <button class="btn btn-secondary">✉️ Envoyer en LRE (AR24)</button>
+        <button class="btn btn-secondary">🔍 Vérifier l'éligibilité aux aides</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIC PAR CLIC -->
+  <div class="panel" id="panel-clicparclic">
+    <h2 class="section-title">Démarche guidée clic-par-clic via Chrome</h2>
+    <p class="section-sub">L'agent navigue à votre place sur les sites du service public. Vous validez chaque étape sensible. Aucune saisie de mot de passe par l'IA — connexion FranceConnect uniquement.</p>
+    <div class="alert alert-warning">
+      <strong>🛡️</strong>
+      <div>Mode "co-pilote" : l'agent ne valide jamais une action irréversible (envoi, paiement, suppression) sans votre confirmation explicite.</div>
+    </div>
+    <h3 style="margin: 20px 0 16px; color: var(--bleu-france);">Démarche en cours : Contester l'indu CAF</h3>
+    <div class="timeline">
+      <div class="step done" data-step="1">
+        <h4>Identification FranceConnect</h4>
+        <p>Connexion validée par vous via votre application Identité Numérique.</p>
+        <div class="browser-mock">→ navigate: caf.fr/connect → click: "Se connecter avec FranceConnect" → ✓ user OAuth</div>
+      </div>
+      <div class="step done" data-step="2">
+        <h4>Récupération du dossier allocataire</h4>
+        <p>Données extraites : N° 7842156, ressources 2025, historique APL.</p>
+        <div class="browser-mock">→ read_page: dashboard CAF → extract: indu_id=APL-2026-04-12384</div>
+      </div>
+      <div class="step active" data-step="3">
+        <h4>Navigation vers le formulaire de contestation <span style="color: var(--rouge-marianne);">● en cours</span></h4>
+        <p>L'agent ouvre la rubrique "Mes démarches → Contester une décision".</p>
+        <div class="browser-mock">→ click: menu "Mes démarches"
+→ click: lien "Contester un trop-perçu"
+→ wait_for: form#contestation-form (≈ 1.2 s)</div>
+      </div>
+      <div class="step" data-step="4">
+        <h4>Pré-remplissage des champs</h4>
+        <p>17 champs auto-remplis depuis votre coffre-fort. Validation utilisateur requise.</p>
+      </div>
+      <div class="step" data-step="5">
+        <h4>Pièces jointes</h4>
+        <p>L'agent attache automatiquement votre avis d'imposition et l'attestation employeur.</p>
+      </div>
+      <div class="step" data-step="6">
+        <h4>⚠️ Validation finale par l'utilisateur</h4>
+        <p>Récapitulatif présenté · Signature électronique · Envoi.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COFFRE-FORT -->
+  <div class="panel" id="panel-coffre">
+    <h2 class="section-title">Coffre-fort numérique chiffré</h2>
+    <p class="section-sub">AES-256 (AWS KMS) · Multi-tenant strict · Zéro entraînement IA · Tous les documents administratifs français centralisés.</p>
+    <div class="alert alert-success">
+      <strong>🔐</strong>
+      <div>Vos documents sont chiffrés. Même les administrateurs Simplif'IA ne peuvent pas les lire. Vous seul détenez la clé via votre passphrase FranceConnect.</div>
+    </div>
+
+    <div class="vault-stats">
+      <div class="vault-stat"><div class="vault-stat-num" style="color: var(--vert-succes);">28</div><div class="vault-stat-label">À jour</div></div>
+      <div class="vault-stat"><div class="vault-stat-num" style="color: var(--orange-alerte);">4</div><div class="vault-stat-label">Expirent bientôt</div></div>
+      <div class="vault-stat"><div class="vault-stat-num" style="color: var(--rouge-marianne);">2</div><div class="vault-stat-label">Périmés</div></div>
+      <div class="vault-stat"><div class="vault-stat-num" style="color: #888;">11</div><div class="vault-stat-label">Manquants</div></div>
+    </div>
+
+    <input type="text" class="vault-search" placeholder="🔍 Rechercher un document (ex: passeport, fiche de paie, carte vitale…)" id="vaultSearch">
+
+    <div class="vault-filters" id="vaultFilters">
+      <button class="vault-filter active" data-filter="all">Tous</button>
+      <button class="vault-filter" data-filter="identite">🆔 Identité</button>
+      <button class="vault-filter" data-filter="sante">🩺 Santé</button>
+      <button class="vault-filter" data-filter="logement">🏠 Logement</button>
+      <button class="vault-filter" data-filter="travail">💼 Travail / Revenus</button>
+      <button class="vault-filter" data-filter="famille">👨‍👩‍👧 Famille / Social</button>
+      <button class="vault-filter" data-filter="vehicule">🚗 Véhicule</button>
+      <button class="vault-filter" data-filter="banque">🏦 Banque</button>
+      <button class="vault-filter" data-filter="justice">⚖️ Justice</button>
+      <button class="vault-filter" data-filter="etudes">🎓 Études</button>
+      <button class="vault-filter" data-filter="etranger">🌍 Étranger</button>
+      <button class="vault-filter" data-filter="energie">⚡ Énergie</button>
+      <button class="vault-filter" data-filter="numerique">🔑 Comptes numériques</button>
+    </div>
+
+    <div id="vaultContent">
+
+      <!-- IDENTITÉ -->
+      <div class="vault-category" data-cat="identite">
+        <div class="vault-cat-header"><h3>🆔 Pièces d'identité & état civil</h3><span class="vault-cat-count">10 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile expiring" data-name="carte nationale d'identité cni"><div class="lock-badge">🔒</div><div class="doc-icon">🆔</div><div class="doc-info"><div class="doc-name">Carte nationale d'identité</div><div class="doc-meta">N° 1234567890 · Préfecture 75</div><span class="doc-status status-warn">Expire dans 8 mois</span></div><button class="doc-action-btn">Renouveler</button></div>
+          <div class="doc-tile" data-name="passeport"><div class="lock-badge">🔒</div><div class="doc-icon">📔</div><div class="doc-info"><div class="doc-name">Passeport</div><div class="doc-meta">N° 22AB12345 · Valide 2031</div><span class="doc-status status-ok">À jour</span></div><button class="doc-action-btn">ANTS</button></div>
+          <div class="doc-tile" data-name="permis de conduire"><div class="lock-badge">🔒</div><div class="doc-icon">🚘</div><div class="doc-info"><div class="doc-name">Permis de conduire</div><div class="doc-meta">B · 12 points · 2007</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="acte de naissance"><div class="lock-badge">🔒</div><div class="doc-icon">📜</div><div class="doc-info"><div class="doc-name">Acte de naissance</div><div class="doc-meta">Mairie de Lyon · 2024</div><span class="doc-status status-warn">Datant de + 3 mois</span></div><button class="doc-action-btn">Demander</button></div>
+          <div class="doc-tile" data-name="livret de famille"><div class="lock-badge">🔒</div><div class="doc-icon">👨‍👩‍👧</div><div class="doc-info"><div class="doc-name">Livret de famille</div><div class="doc-meta">Mairie · 2018</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="carte d'électeur"><div class="lock-badge">🔒</div><div class="doc-icon">🗳️</div><div class="doc-info"><div class="doc-name">Carte d'électeur</div><div class="doc-meta">Bureau 0421 · Paris 11e</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="acte de mariage pacs"><div class="doc-icon">💍</div><div class="doc-info"><div class="doc-name">Acte de mariage / PACS</div><div class="doc-meta">Non renseigné</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Ajouter</button></div>
+          <div class="doc-tile missing" data-name="extrait kbis"><div class="doc-icon">🏛️</div><div class="doc-info"><div class="doc-name">Extrait Kbis (auto-entrepreneur)</div><div class="doc-meta">Non renseigné</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">INPI</button></div>
+          <div class="doc-tile missing" data-name="justificatif de domicile"><div class="doc-icon">📮</div><div class="doc-info"><div class="doc-name">Justificatif de domicile</div><div class="doc-meta">Recommandé : - 3 mois</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Importer</button></div>
+          <div class="doc-tile missing" data-name="photo identité"><div class="doc-icon">🖼️</div><div class="doc-info"><div class="doc-name">Photos d'identité ANTS</div><div class="doc-meta">Format e-photo</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Capturer</button></div>
+        </div>
+      </div>
+
+      <!-- SANTÉ -->
+      <div class="vault-category" data-cat="sante">
+        <div class="vault-cat-header"><h3>🩺 Santé & sécurité sociale</h3><span class="vault-cat-count">8 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="carte vitale"><div class="lock-badge">🔒</div><div class="doc-icon">💳</div><div class="doc-info"><div class="doc-name">Carte Vitale</div><div class="doc-meta">N° 1 85 03 75 116 042 · Ameli</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="attestation sécurité sociale ameli"><div class="lock-badge">🔒</div><div class="doc-icon">📋</div><div class="doc-info"><div class="doc-name">Attestation de droits Ameli</div><div class="doc-meta">PDF · 95 Ko · 01/2026</div><span class="doc-status status-ok">À jour</span></div><button class="doc-action-btn">Ameli</button></div>
+          <div class="doc-tile" data-name="carte mutuelle"><div class="lock-badge">🔒</div><div class="doc-icon">💚</div><div class="doc-info"><div class="doc-name">Carte mutuelle (Harmonie)</div><div class="doc-meta">N° adhérent 8842156 · 12/2026</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="carnet de vaccination"><div class="lock-badge">🔒</div><div class="doc-icon">💉</div><div class="doc-info"><div class="doc-name">Carnet de vaccination</div><div class="doc-meta">DTP 2024 · Grippe 10/25</div><span class="doc-status status-ok">À jour</span></div><button class="doc-action-btn">Mon Espace Santé</button></div>
+          <div class="doc-tile expiring" data-name="ordonnance"><div class="lock-badge">🔒</div><div class="doc-icon">💊</div><div class="doc-info"><div class="doc-name">Ordonnances en cours</div><div class="doc-meta">3 ordonnances · 1 expire 12/06</div><span class="doc-status status-warn">À renouveler</span></div></div>
+          <div class="doc-tile missing" data-name="déclaration médecin traitant"><div class="doc-icon">👨‍⚕️</div><div class="doc-info"><div class="doc-name">Déclaration médecin traitant</div><div class="doc-meta">Non renseigné</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Ameli</button></div>
+          <div class="doc-tile missing" data-name="dossier ald affection longue durée"><div class="doc-icon">🏥</div><div class="doc-info"><div class="doc-name">Dossier ALD (longue durée)</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="mdph rqth handicap"><div class="doc-icon">♿</div><div class="doc-info"><div class="doc-name">Notification MDPH / RQTH</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+        </div>
+      </div>
+
+      <!-- TRAVAIL / REVENUS -->
+      <div class="vault-category" data-cat="travail">
+        <div class="vault-cat-header"><h3>💼 Travail & revenus</h3><span class="vault-cat-count">9 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="contrat de travail"><div class="lock-badge">🔒</div><div class="doc-icon">📝</div><div class="doc-info"><div class="doc-name">Contrat de travail (CDI)</div><div class="doc-meta">SARL Gredai · 03/2022</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="fiche de paie bulletin salaire"><div class="lock-badge">🔒</div><div class="doc-icon">💶</div><div class="doc-info"><div class="doc-name">Bulletins de salaire (12)</div><div class="doc-meta">Avril 2026 · 215 Ko</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="avis d'imposition"><div class="lock-badge">🔒</div><div class="doc-icon">📊</div><div class="doc-info"><div class="doc-name">Avis d'imposition 2025</div><div class="doc-meta">RFR : 38 420 € · 412 Ko</div><span class="doc-status status-ok">À jour</span></div><button class="doc-action-btn">Impôts.gouv</button></div>
+          <div class="doc-tile" data-name="déclaration revenus 2042"><div class="lock-badge">🔒</div><div class="doc-icon">📑</div><div class="doc-info"><div class="doc-name">Déclaration revenus (CERFA 2042)</div><div class="doc-meta">2025 · pré-remplie</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="attestation employeur"><div class="lock-badge">🔒</div><div class="doc-icon">🏢</div><div class="doc-info"><div class="doc-name">Attestation employeur</div><div class="doc-meta">04/2026 · Signée</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="attestation pôle emploi france travail"><div class="doc-icon">🔍</div><div class="doc-info"><div class="doc-name">Attestation France Travail</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="relevé de carrière retraite"><div class="doc-icon">📅</div><div class="doc-info"><div class="doc-name">Relevé de carrière (RIS)</div><div class="doc-meta">Non importé</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Info-Retraite</button></div>
+          <div class="doc-tile missing" data-name="diplôme certificat"><div class="doc-icon">🎓</div><div class="doc-info"><div class="doc-name">Diplômes</div><div class="doc-meta">Non importés</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">DiplomEsr</button></div>
+          <div class="doc-tile missing" data-name="formation cpf"><div class="doc-icon">📚</div><div class="doc-info"><div class="doc-name">Compte CPF</div><div class="doc-meta">Solde non synchronisé</div><span class="doc-status status-missing">À connecter</span></div><button class="doc-action-btn">MonCompteFormation</button></div>
+        </div>
+      </div>
+
+      <!-- LOGEMENT -->
+      <div class="vault-category" data-cat="logement">
+        <div class="vault-cat-header"><h3>🏠 Logement</h3><span class="vault-cat-count">8 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="bail location contrat"><div class="lock-badge">🔒</div><div class="doc-icon">📃</div><div class="doc-info"><div class="doc-name">Bail de location</div><div class="doc-meta">09/2024 · 3 ans</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="quittances de loyer"><div class="lock-badge">🔒</div><div class="doc-icon">🧾</div><div class="doc-info"><div class="doc-name">Quittances de loyer (12)</div><div class="doc-meta">Dernière : avril 2026</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="état des lieux"><div class="lock-badge">🔒</div><div class="doc-icon">📋</div><div class="doc-info"><div class="doc-name">État des lieux d'entrée</div><div class="doc-meta">09/2024 · Signé</div><span class="doc-status status-ok">Archivé</span></div></div>
+          <div class="doc-tile" data-name="assurance habitation"><div class="lock-badge">🔒</div><div class="doc-icon">🛡️</div><div class="doc-info"><div class="doc-name">Assurance habitation</div><div class="doc-meta">MAIF · échéance 09/2026</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="taxe d'habitation"><div class="lock-badge">🔒</div><div class="doc-icon">🏛️</div><div class="doc-info"><div class="doc-name">Taxe d'habitation</div><div class="doc-meta">Supprimée RP 2023</div><span class="doc-status status-ok">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="taxe foncière"><div class="doc-icon">🏠</div><div class="doc-info"><div class="doc-name">Taxe foncière</div><div class="doc-meta">Non propriétaire</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="diagnostic dpe"><div class="doc-icon">🌡️</div><div class="doc-info"><div class="doc-name">DPE / diagnostics</div><div class="doc-meta">Demandé au bailleur</div><span class="doc-status status-missing">Manquant</span></div><button class="doc-action-btn">Demander</button></div>
+          <div class="doc-tile missing" data-name="maprimerenov anah"><div class="doc-icon">🔨</div><div class="doc-info"><div class="doc-name">MaPrimeRénov' / ANAH</div><div class="doc-meta">Non éligible (locataire)</div><span class="doc-status status-missing">N/A</span></div></div>
+        </div>
+      </div>
+
+      <!-- FAMILLE / SOCIAL -->
+      <div class="vault-category" data-cat="famille">
+        <div class="vault-cat-header"><h3>👨‍👩‍👧 Famille & prestations sociales</h3><span class="vault-cat-count">7 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile expired" data-name="notification caf indu apl"><div class="lock-badge">🔒</div><div class="doc-icon">📨</div><div class="doc-info"><div class="doc-name">Notification CAF (indu APL)</div><div class="doc-meta">28/04/2026 · 188 Ko</div><span class="doc-status status-err">Action requise · 2 mois</span></div><button class="doc-action-btn">Contester</button></div>
+          <div class="doc-tile" data-name="attestation caf paiement"><div class="lock-badge">🔒</div><div class="doc-icon">📑</div><div class="doc-info"><div class="doc-name">Attestation paiement CAF</div><div class="doc-meta">N° allocataire 7842156</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="attestation prestations familiales caf"><div class="lock-badge">🔒</div><div class="doc-icon">👶</div><div class="doc-info"><div class="doc-name">Attestation quotient familial</div><div class="doc-meta">QF 2026 : 612</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="rsa revenu solidarité active"><div class="doc-icon">🤝</div><div class="doc-info"><div class="doc-name">Notification RSA</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="prime activité"><div class="doc-icon">💰</div><div class="doc-info"><div class="doc-name">Prime d'activité</div><div class="doc-meta">À vérifier (estimation +85 €/mois)</div><span class="doc-status status-warn">À tester</span></div><button class="doc-action-btn">Simuler</button></div>
+          <div class="doc-tile missing" data-name="aah allocation adulte handicapé"><div class="doc-icon">♿</div><div class="doc-info"><div class="doc-name">Notification AAH</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="carte famille nombreuse sncf"><div class="doc-icon">🚄</div><div class="doc-info"><div class="doc-name">Carte famille nombreuse</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+        </div>
+      </div>
+
+      <!-- VÉHICULE -->
+      <div class="vault-category" data-cat="vehicule">
+        <div class="vault-cat-header"><h3>🚗 Véhicule</h3><span class="vault-cat-count">5 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="carte grise certificat immatriculation"><div class="lock-badge">🔒</div><div class="doc-icon">🚗</div><div class="doc-info"><div class="doc-name">Carte grise (CI)</div><div class="doc-meta">AB-123-CD · Renault Clio</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="assurance auto"><div class="lock-badge">🔒</div><div class="doc-icon">🛡️</div><div class="doc-info"><div class="doc-name">Assurance auto</div><div class="doc-meta">MAAF · échéance 11/2026</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile expiring" data-name="contrôle technique"><div class="lock-badge">🔒</div><div class="doc-icon">🔧</div><div class="doc-info"><div class="doc-name">Contrôle technique</div><div class="doc-meta">Expire 14/08/2026</div><span class="doc-status status-warn">Dans 3 mois</span></div><button class="doc-action-btn">Réserver</button></div>
+          <div class="doc-tile" data-name="vignette crit'air"><div class="lock-badge">🔒</div><div class="doc-icon">🟢</div><div class="doc-info"><div class="doc-name">Vignette Crit'Air</div><div class="doc-meta">Crit'Air 1 (essence 2018)</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="pv amende contravention"><div class="doc-icon">📄</div><div class="doc-info"><div class="doc-name">Avis de contravention</div><div class="doc-meta">Aucun en cours</div><span class="doc-status status-ok">RAS</span></div></div>
+        </div>
+      </div>
+
+      <!-- BANQUE -->
+      <div class="vault-category" data-cat="banque">
+        <div class="vault-cat-header"><h3>🏦 Banque & finance</h3><span class="vault-cat-count">4 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="rib relevé identité bancaire"><div class="lock-badge">🔒</div><div class="doc-icon">💳</div><div class="doc-info"><div class="doc-name">RIB (Crédit Mutuel)</div><div class="doc-meta">FR76 1027 ... 8425</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile" data-name="relevés de compte bancaire"><div class="lock-badge">🔒</div><div class="doc-icon">📊</div><div class="doc-info"><div class="doc-name">Relevés de compte (3 mois)</div><div class="doc-meta">02-04/2026 · 142 Ko</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="prêt crédit immobilier consommation"><div class="doc-icon">🏠</div><div class="doc-info"><div class="doc-name">Tableau d'amortissement crédit</div><div class="doc-meta">Aucun crédit en cours</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="livret a épargne"><div class="doc-icon">🐷</div><div class="doc-info"><div class="doc-name">Relevé épargne (Livret A)</div><div class="doc-meta">Non importé</div><span class="doc-status status-missing">À connecter</span></div></div>
+        </div>
+      </div>
+
+      <!-- JUSTICE -->
+      <div class="vault-category" data-cat="justice">
+        <div class="vault-cat-header"><h3>⚖️ Justice</h3><span class="vault-cat-count">3 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="casier judiciaire bulletin n°3 b3"><div class="lock-badge">🔒</div><div class="doc-icon">📜</div><div class="doc-info"><div class="doc-name">Casier judiciaire (B3)</div><div class="doc-meta">Néant · 03/2025</div><span class="doc-status status-ok">À jour</span></div><button class="doc-action-btn">cjn.justice.gouv</button></div>
+          <div class="doc-tile missing" data-name="aide juridictionnelle"><div class="doc-icon">⚖️</div><div class="doc-info"><div class="doc-name">Demande aide juridictionnelle</div><div class="doc-meta">Éligible si RFR < 12 271 €</div><span class="doc-status status-missing">Test à faire</span></div><button class="doc-action-btn">Simuler</button></div>
+          <div class="doc-tile missing" data-name="décision justice jugement"><div class="doc-icon">📋</div><div class="doc-info"><div class="doc-name">Décisions de justice</div><div class="doc-meta">Aucune en cours</div><span class="doc-status status-missing">RAS</span></div></div>
+        </div>
+      </div>
+
+      <!-- ÉTUDES -->
+      <div class="vault-category" data-cat="etudes">
+        <div class="vault-cat-header"><h3>🎓 Études</h3><span class="vault-cat-count">3 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile missing" data-name="diplôme baccalauréat"><div class="doc-icon">🎓</div><div class="doc-info"><div class="doc-name">Diplômes (Bac, BTS…)</div><div class="doc-meta">Non importés</div><span class="doc-status status-missing">À ajouter</span></div><button class="doc-action-btn">DiplomEsr</button></div>
+          <div class="doc-tile missing" data-name="bourse crous"><div class="doc-icon">📚</div><div class="doc-info"><div class="doc-name">Bourse CROUS</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="convention de stage"><div class="doc-icon">📝</div><div class="doc-info"><div class="doc-name">Convention de stage</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+        </div>
+      </div>
+
+      <!-- ÉTRANGER -->
+      <div class="vault-category" data-cat="etranger">
+        <div class="vault-cat-header"><h3>🌍 Étranger & voyages</h3><span class="vault-cat-count">5 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="passeport voyage"><div class="lock-badge">🔒</div><div class="doc-icon">📔</div><div class="doc-info"><div class="doc-name">Passeport (voir Identité)</div><div class="doc-meta">Valide jusqu'en 2031</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="visa"><div class="doc-icon">🛂</div><div class="doc-info"><div class="doc-name">Visa</div><div class="doc-meta">Aucun en cours</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="titre de séjour carte"><div class="doc-icon">🪪</div><div class="doc-info"><div class="doc-name">Titre de séjour</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="ofii récépissé"><div class="doc-icon">📋</div><div class="doc-info"><div class="doc-name">Récépissé OFII</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile missing" data-name="naturalisation"><div class="doc-icon">🇫🇷</div><div class="doc-info"><div class="doc-name">Demande de naturalisation</div><div class="doc-meta">Non concerné</div><span class="doc-status status-missing">N/A</span></div></div>
+        </div>
+      </div>
+
+      <!-- ÉNERGIE -->
+      <div class="vault-category" data-cat="energie">
+        <div class="vault-cat-header"><h3>⚡ Énergie & factures</h3><span class="vault-cat-count">4 documents</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="facture edf électricité"><div class="lock-badge">🔒</div><div class="doc-icon">⚡</div><div class="doc-info"><div class="doc-name">Facture EDF</div><div class="doc-meta">Avril 2026 · 78 €</div><span class="doc-status status-ok">Payée</span></div></div>
+          <div class="doc-tile" data-name="facture gaz engie grdf"><div class="lock-badge">🔒</div><div class="doc-icon">🔥</div><div class="doc-info"><div class="doc-name">Facture gaz (Engie)</div><div class="doc-meta">Mars 2026 · 145 €</div><span class="doc-status status-ok">Payée</span></div></div>
+          <div class="doc-tile" data-name="facture internet box opérateur"><div class="lock-badge">🔒</div><div class="doc-icon">📶</div><div class="doc-info"><div class="doc-name">Facture box internet</div><div class="doc-meta">Free · 29,99 €/mois</div><span class="doc-status status-ok">À jour</span></div></div>
+          <div class="doc-tile missing" data-name="chèque énergie"><div class="doc-icon">🧾</div><div class="doc-info"><div class="doc-name">Chèque énergie</div><div class="doc-meta">Plafond RFR : 11 000 €</div><span class="doc-status status-missing">Non éligible</span></div></div>
+        </div>
+      </div>
+
+      <!-- COMPTES NUMÉRIQUES -->
+      <div class="vault-category" data-cat="numerique">
+        <div class="vault-cat-header"><h3>🔑 Comptes numériques officiels</h3><span class="vault-cat-count">8 comptes</span></div>
+        <div class="vault-grid">
+          <div class="doc-tile" data-name="franceconnect"><div class="lock-badge">🔒</div><div class="doc-icon">🔐</div><div class="doc-info"><div class="doc-name">FranceConnect+</div><div class="doc-meta">Identité Numérique La Poste</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="impots.gouv compte fiscal"><div class="lock-badge">🔒</div><div class="doc-icon">💰</div><div class="doc-info"><div class="doc-name">impots.gouv.fr</div><div class="doc-meta">N° fiscal · 13 chiffres</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="ameli compte assurance maladie"><div class="lock-badge">🔒</div><div class="doc-icon">🏥</div><div class="doc-info"><div class="doc-name">Ameli (Assurance Maladie)</div><div class="doc-meta">Compte synchronisé</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="caf mon compte allocataire"><div class="lock-badge">🔒</div><div class="doc-icon">👨‍👩‍👧</div><div class="doc-info"><div class="doc-name">caf.fr (Mon compte)</div><div class="doc-meta">N° 7842156</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="ants agence titres sécurisés"><div class="lock-badge">🔒</div><div class="doc-icon">🆔</div><div class="doc-info"><div class="doc-name">ANTS (titres sécurisés)</div><div class="doc-meta">CNI, passeport, permis</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="france travail pôle emploi"><div class="lock-badge">🔒</div><div class="doc-icon">🔍</div><div class="doc-info"><div class="doc-name">France Travail</div><div class="doc-meta">Non inscrit</div><span class="doc-status status-missing">N/A</span></div></div>
+          <div class="doc-tile" data-name="mon espace santé dmp"><div class="lock-badge">🔒</div><div class="doc-icon">🩺</div><div class="doc-info"><div class="doc-name">Mon Espace Santé</div><div class="doc-meta">DMP activé</div><span class="doc-status status-ok">Connecté</span></div></div>
+          <div class="doc-tile" data-name="info retraite assurance"><div class="lock-badge">🔒</div><div class="doc-icon">📅</div><div class="doc-info"><div class="doc-name">Info-Retraite</div><div class="doc-meta">À synchroniser</div><span class="doc-status status-warn">À connecter</span></div><button class="doc-action-btn">Connecter</button></div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <button class="btn btn-primary">＋ Ajouter un nouveau document</button>
+        <button class="btn btn-secondary" style="margin-left: 8px;">📲 Scanner avec mon téléphone</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LRE -->
+  <div class="panel" id="panel-lre">
+    <h2 class="section-title">Lettre Recommandée Électronique (AR24 · La Poste)</h2>
+    <p class="section-sub">Pleine valeur juridique équivalente à un recommandé papier · Horodatage qualifié eIDAS · Preuve de dépôt et d'AR.</p>
+    <div class="lre-card">
+      <div class="lre-stamp">eIDAS QUALIFIÉ</div>
+      <div class="lre-section">
+        <div class="lre-label">Expéditeur (vous)</div>
+        <div class="lre-content">Arnaud DURAND<br>42 rue de la République, 75011 Paris</div>
+      </div>
+      <div class="lre-section">
+        <div class="lre-label">Destinataire</div>
+        <div class="lre-content">CAF de Paris — Service contentieux<br>50 rue du Docteur Finlay, 75015 Paris</div>
+      </div>
+      <div class="lre-section">
+        <div class="lre-label">Objet</div>
+        <div class="lre-content">Contestation d'indu APL · Dossier 7842156 · Notification du 28/04/2026</div>
+      </div>
+      <div class="lre-section">
+        <div class="lre-label">Pièces jointes</div>
+        <div class="lre-content">📎 CERFA 15473*02 signé · 📎 Avis d'imposition 2025 · 📎 Attestation employeur</div>
+      </div>
+      <div class="lre-section">
+        <div class="lre-label">Coût</div>
+        <div class="lre-content"><strong>4,68 €</strong> · facturation directe via API AR24</div>
+      </div>
+      <div class="lre-actions">
+        <button class="btn btn-primary">✅ Signer & envoyer la LRE</button>
+        <button class="btn btn-secondary">👁 Prévisualiser le PDF</button>
+        <button class="btn btn-secondary">📧 Envoi simple à la place</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <strong>Simplif'IA France</strong> — Prototype non-fonctionnel à des fins de démonstration. ·
+  Stack cible : Gemini 1.5 Pro · FastAPI · Pinecone · HeyGen · AR24 · AWS KMS<br>
+  RGPD compliant · Zéro entraînement sur données utilisateurs · Hébergé en France
+</footer>
+
+<script>
+  /* ========== TABS ========== */
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ========== ELEVENLABS CONFIG ==========
+   * ⚠️ ATTENTION SÉCURITÉ : cette clé API est exposée côté client.
+   * Pour une mise en production, déplacez-la sur un backend (FastAPI proxy).
+   * Révoquez et tournez la clé après chaque démo publique.
+   * ==================================== */
+  const ELEVENLABS_CONFIG = {
+    apiKey: 'sk_af4444f47a1f029133e58cf0e24703925ae1c4808ce9900d',
+    voiceId: 'XB0fDUnXU5powFXDhCwa', // Charlotte (FR)
+    modelId: 'eleven_multilingual_v2',
+    voiceSettings: {
+      stability: 0.55,
+      similarity_boost: 0.75,
+      style: 0.25,
+      use_speaker_boost: true
+    }
+  };
+  let useElevenLabs = true;
+  let currentAudio = null;
+
+  /* ========== VOICE: TEXT-TO-SPEECH ========== */
+  const synth = window.speechSynthesis;
+  let voiceEnabled = true;
+  let frenchVoice = null;
+  let falcMode = false;
+
+  function pickFrenchVoice() {
+    const voices = synth.getVoices();
+    // Prefer female French voices
+    const preferred = [
+      v => v.lang === 'fr-FR' && /female|f\b|amel|audrey|julie|virginie|marie|hortense|aurelie/i.test(v.name),
+      v => v.lang === 'fr-FR',
+      v => v.lang.startsWith('fr')
+    ];
+    for (const test of preferred) {
+      const found = voices.find(test);
+      if (found) return found;
+    }
+    return voices[0] || null;
+  }
+
+  function ensureVoice() {
+    if (!frenchVoice) frenchVoice = pickFrenchVoice();
+    return frenchVoice;
+  }
+
+  if (synth) {
+    synth.onvoiceschanged = () => { frenchVoice = pickFrenchVoice(); };
+    setTimeout(() => { frenchVoice = pickFrenchVoice(); }, 100);
+  }
+
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    // Remove citation block from spoken text
+    const cites = tmp.querySelectorAll('.msg-cite');
+    cites.forEach(c => c.remove());
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function stopAllSpeech() {
+    if (synth) synth.cancel();
+    if (currentAudio) {
+      try { currentAudio.pause(); } catch (e) {}
+      currentAudio = null;
+    }
+    const svg = document.getElementById('avatarSvg');
+    const bar = document.getElementById('speakingBar');
+    if (svg) svg.classList.remove('speaking');
+    if (bar) bar.classList.remove('active');
+  }
+
+  async function speakWithElevenLabs(text) {
+    const cleaned = stripHtml(text).trim();
+    if (!cleaned) return false;
+    const svg = document.getElementById('avatarSvg');
+    const bar = document.getElementById('speakingBar');
+    const status = document.getElementById('voiceStatus');
+    status.textContent = '🎙️ Synthèse ElevenLabs en cours…';
+
+    try {
+      const response = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_CONFIG.voiceId}`,
+        {
+          method: 'POST',
+          headers: {
+            'xi-api-key': ELEVENLABS_CONFIG.apiKey,
+            'Content-Type': 'application/json',
+            'Accept': 'audio/mpeg'
+          },
+          body: JSON.stringify({
+            text: cleaned,
+            model_id: ELEVENLABS_CONFIG.modelId,
+            voice_settings: ELEVENLABS_CONFIG.voiceSettings
+          })
+        }
+      );
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`ElevenLabs ${response.status}: ${errText.substring(0, 100)}`);
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      stopAllSpeech();
+      currentAudio = new Audio(url);
+      currentAudio.playbackRate = falcMode ? 0.85 : 1;
+      currentAudio.onplay = () => {
+        svg.classList.add('speaking');
+        bar.classList.add('active');
+        status.textContent = '🔊 Maître Léa parle (ElevenLabs · voix premium)';
+      };
+      currentAudio.onended = () => {
+        svg.classList.remove('speaking');
+        bar.classList.remove('active');
+        status.textContent = '';
+        URL.revokeObjectURL(url);
+        currentAudio = null;
+      };
+      currentAudio.onerror = (e) => {
+        svg.classList.remove('speaking');
+        bar.classList.remove('active');
+        status.textContent = '⚠️ Erreur lecture audio';
+        URL.revokeObjectURL(url);
+        currentAudio = null;
+      };
+      await currentAudio.play();
+      return true;
+    } catch (err) {
+      console.error('ElevenLabs error:', err);
+      status.textContent = '⚠️ ElevenLabs indisponible · fallback voix navigateur';
+      return false;
+    }
+  }
+
+  function speakWithBrowser(text, opts = {}) {
+    if (!synth) return;
+    synth.cancel();
+    const cleaned = stripHtml(text).trim();
+    if (!cleaned) return;
+    const utter = new SpeechSynthesisUtterance(cleaned);
+    const v = ensureVoice();
+    if (v) utter.voice = v;
+    utter.lang = 'fr-FR';
+    utter.rate = falcMode ? 0.85 : (opts.rate || 1);
+    utter.pitch = opts.pitch || 1.05;
+    utter.volume = 1;
+    const svg = document.getElementById('avatarSvg');
+    const bar = document.getElementById('speakingBar');
+    const status = document.getElementById('voiceStatus');
+    utter.onstart = () => {
+      svg.classList.add('speaking');
+      bar.classList.add('active');
+      status.textContent = '🔊 Maître Léa parle (voix navigateur)';
+    };
+    utter.onend = utter.onerror = () => {
+      svg.classList.remove('speaking');
+      bar.classList.remove('active');
+      status.textContent = '';
+    };
+    synth.speak(utter);
+  }
+
+  async function speak(text, opts = {}) {
+    if (!voiceEnabled) return;
+    stopAllSpeech();
+    if (useElevenLabs && ELEVENLABS_CONFIG.apiKey) {
+      const ok = await speakWithElevenLabs(text);
+      if (ok) return;
+      // Fallback to browser voice if ElevenLabs failed
+    }
+    speakWithBrowser(text, opts);
+  }
+
+  /* ========== VOICE: SPEECH-TO-TEXT ========== */
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognition = null;
+  let listening = false;
+
+  if (SR) {
+    recognition = new SR();
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onresult = (e) => {
+      const transcript = Array.from(e.results).map(r => r[0].transcript).join('');
+      document.getElementById('chatInput').value = transcript;
+      if (e.results[e.results.length - 1].isFinal) {
+        setTimeout(sendMsg, 200);
+      }
+    };
+    recognition.onstart = () => {
+      listening = true;
+      document.getElementById('avatarSvg').classList.add('listening');
+      document.getElementById('btnMic').classList.add('active');
+      document.getElementById('voiceStatus').textContent = '🎤 J\'écoute… parlez maintenant';
+    };
+    recognition.onend = () => {
+      listening = false;
+      document.getElementById('avatarSvg').classList.remove('listening');
+      document.getElementById('btnMic').classList.remove('active');
+      if (document.getElementById('voiceStatus').textContent.startsWith('🎤')) {
+        document.getElementById('voiceStatus').textContent = '';
+      }
+    };
+    recognition.onerror = (e) => {
+      document.getElementById('voiceStatus').textContent = '⚠️ Micro non autorisé ou erreur : ' + e.error;
+    };
+  }
+
+  /* ========== BUTTONS ========== */
+  document.getElementById('btnMic').addEventListener('click', () => {
+    if (!recognition) {
+      document.getElementById('voiceStatus').textContent = '⚠️ Reconnaissance vocale non supportée par ce navigateur (utilisez Chrome).';
+      return;
+    }
+    if (listening) recognition.stop();
+    else { try { synth.cancel(); recognition.start(); } catch (e) {} }
+  });
+
+  document.getElementById('btnSpeak').addEventListener('click', () => {
+    voiceEnabled = !voiceEnabled;
+    const btn = document.getElementById('btnSpeak');
+    btn.textContent = voiceEnabled ? '🔊 Voix ON' : '🔇 Voix OFF';
+    btn.classList.toggle('muted', !voiceEnabled);
+    if (!voiceEnabled) stopAllSpeech();
+  });
+
+  document.getElementById('btnStop').addEventListener('click', () => {
+    stopAllSpeech();
+    if (recognition && listening) recognition.stop();
+    document.getElementById('voiceStatus').textContent = '';
+  });
+
+  document.getElementById('voiceSelect').addEventListener('change', (e) => {
+    const val = e.target.value;
+    if (val === 'browser') {
+      useElevenLabs = false;
+      document.getElementById('voiceStatus').textContent = '🔈 Voix navigateur sélectionnée';
+    } else if (val.startsWith('el:')) {
+      useElevenLabs = true;
+      ELEVENLABS_CONFIG.voiceId = val.substring(3);
+      document.getElementById('voiceStatus').textContent = '🎙️ Voix ElevenLabs sélectionnée';
+      // Demo the new voice
+      stopAllSpeech();
+      setTimeout(() => speak("Bonjour, je suis votre nouvelle voix."), 200);
+    }
+  });
+
+  document.getElementById('btnFalc').addEventListener('click', () => {
+    falcMode = !falcMode;
+    document.getElementById('btnFalc').classList.toggle('active', falcMode);
+    document.getElementById('voiceStatus').textContent = falcMode ? '✅ Mode FALC activé (parole ralentie)' : '';
+  });
+
+  /* ========== CHAT ========== */
+  // Pre-canned RAG-style answers for the demo
+  const cannedAnswers = [
+    {
+      keywords: ['indu', 'caf', 'rembours', 'trop perçu', 'trop-perçu'],
+      reply: `D'après le Code de la sécurité sociale article L553-1, vous avez deux mois pour contester. Trois options : remise gracieuse via le CERFA 15473, recours administratif préalable, ou demande d'échéancier. Voulez-vous que je rédige le recours ?`
+    },
+    {
+      keywords: ['apl', 'logement', 'aide au logement'],
+      reply: `L'aide personnalisée au logement est calculée selon vos ressources des douze derniers mois glissants depuis 2021. Si vos revenus ont baissé, demandez une révision. Article R823-7 du Code de la construction.`
+    },
+    {
+      keywords: ['impôt', 'fisc', 'déclaration'],
+      reply: `Pour les impôts, je peux vérifier votre éligibilité au prélèvement à la source modulé, à un échéancier, ou à une remise gracieuse selon l'article L247 du Livre des procédures fiscales. Quelle est votre situation ?`
+    },
+    {
+      keywords: ['rsa', 'revenu de solidarité'],
+      reply: `Le RSA est versé sous conditions de ressources et de résidence, articles L262-1 et suivants du Code de l'action sociale. Le montant forfaitaire 2026 pour une personne seule est de 635,71 euros. Voulez-vous tester votre éligibilité ?`
+    },
+    {
+      keywords: ['retraite', 'pension'],
+      reply: `Pour la retraite, la réforme de 2023 fixe l'âge légal à 64 ans à terme. Je peux estimer vos trimestres et votre pension à partir de votre relevé de carrière. Avez-vous un relevé récent à téléverser ?`
+    },
+    {
+      keywords: ['contestation', 'recours', 'contester'],
+      reply: `Pour toute contestation administrative, le délai standard est de deux mois à compter de la notification. Je peux rédiger le recours en citant le texte applicable. Quel est l'organisme concerné ?`
+    },
+    {
+      keywords: ['aide', 'éligible', 'droits'],
+      reply: `Sur la base de votre profil, je détecte trois aides potentiellement non réclamées. Souhaitez-vous que je lance un simulateur complet basé sur votre dernier avis d'imposition ?`
+    }
+  ];
+
+  function getCannedAnswer(question) {
+    const q = question.toLowerCase();
+    for (const c of cannedAnswers) {
+      if (c.keywords.some(k => q.includes(k))) return c.reply;
+    }
+    return `Je consulte la base de connaissances officielle, c'est-à-dire Service-Public point F R, Légifrance et le BOFiP, pour répondre précisément à votre question. Pouvez-vous me préciser l'organisme concerné, par exemple CAF, impôts, ou Pôle Emploi ?`;
+  }
+
+  function sendMsg() {
+    const input = document.getElementById('chatInput');
+    const msgs = document.getElementById('chatMessages');
+    if (!input.value.trim()) return;
+    const u = document.createElement('div');
+    u.className = 'msg user';
+    u.textContent = input.value;
+    msgs.appendChild(u);
+    const q = input.value;
+    input.value = '';
+    msgs.scrollTop = msgs.scrollHeight;
+
+    setTimeout(() => {
+      const reply = getCannedAnswer(q);
+      const b = document.createElement('div');
+      b.className = 'msg bot';
+      b.innerHTML = reply + `<div class="msg-cite">📎 Source : base RAG officielle · 0 hallucination</div>`;
+      msgs.appendChild(b);
+      msgs.scrollTop = msgs.scrollHeight;
+      speak(reply);
+    }, 700);
+  }
+
+  document.getElementById('chatInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendMsg();
+  });
+
+  /* ========== VAULT FILTER & SEARCH ========== */
+  const vaultFilters = document.querySelectorAll('.vault-filter');
+  const vaultCategories = document.querySelectorAll('.vault-category');
+  const vaultSearch = document.getElementById('vaultSearch');
+
+  function applyVaultFilters() {
+    const activeFilter = document.querySelector('.vault-filter.active').dataset.filter;
+    const query = (vaultSearch.value || '').toLowerCase().trim();
+    vaultCategories.forEach(cat => {
+      const catMatches = (activeFilter === 'all' || cat.dataset.cat === activeFilter);
+      let visibleTiles = 0;
+      cat.querySelectorAll('.doc-tile').forEach(tile => {
+        const name = (tile.dataset.name || '').toLowerCase();
+        const text = (tile.textContent || '').toLowerCase();
+        const queryMatches = !query || name.includes(query) || text.includes(query);
+        const show = catMatches && queryMatches;
+        tile.style.display = show ? '' : 'none';
+        if (show) visibleTiles++;
+      });
+      cat.style.display = (catMatches && visibleTiles > 0) ? '' : 'none';
+    });
+  }
+
+  vaultFilters.forEach(f => {
+    f.addEventListener('click', () => {
+      vaultFilters.forEach(x => x.classList.remove('active'));
+      f.classList.add('active');
+      applyVaultFilters();
+    });
+  });
+  vaultSearch.addEventListener('input', applyVaultFilters);
+
+  /* ========== WELCOME ON FIRST INTERACTION ========== */
+  let welcomed = false;
+  document.body.addEventListener('click', () => {
+    if (welcomed || !voiceEnabled) return;
+    welcomed = true;
+    setTimeout(() => {
+      speak("Bonjour Arnaud, je suis Maître Léa, votre conseillère juridique. Cliquez sur le micro pour me parler, ou tapez votre question.");
+    }, 300);
+  }, { once: true });
+</script>
+
+</body>
+</html>

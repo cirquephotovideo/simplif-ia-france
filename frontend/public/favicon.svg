@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="frFlag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0055A4"/>
+      <stop offset="33.33%" stop-color="#0055A4"/>
+      <stop offset="33.34%" stop-color="#FFFFFF"/>
+      <stop offset="66.66%" stop-color="#FFFFFF"/>
+      <stop offset="66.67%" stop-color="#EF4135"/>
+      <stop offset="100%" stop-color="#EF4135"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="url(#frFlag)"/>
+  <rect x="2" y="2" width="60" height="60" rx="11" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.5"/>
+</svg>

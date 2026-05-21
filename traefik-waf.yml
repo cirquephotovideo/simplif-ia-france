@@ -1,0 +1,96 @@
+# ============================================================================
+# Traefik WAF configuration · ModSecurity + OWASP CRS
+# À ajouter dans Coolify : Services → Network → Traefik labels
+# ============================================================================
+
+# Activation du plugin Coraza (ModSecurity en Go, compatible OWASP CRS)
+# Dans Coolify : Settings → Server → Traefik → Custom config → coller cette section
+experimental:
+  plugins:
+    coraza:
+      modulename: "github.com/jcchavezs/coraza-http-wasm-traefik"
+      version: "v0.4.0"
+
+http:
+  middlewares:
+    # WAF Coraza · règles OWASP CRS 4.x
+    sia-waf:
+      plugin:
+        coraza:
+          directives:
+            - "Include @recommended-conf"
+            - "Include @crs-setup-conf"
+            - "Include @owasp_crs/*.conf"
+            - "SecRuleEngine On"
+            - "SecRequestBodyAccess On"
+            - "SecResponseBodyAccess Off"
+            # Anomaly scoring (paranoia level 1 = pas trop strict)
+            - "SecAction \"id:900110,phase:1,nolog,pass,t:none,setvar:tx.inbound_anomaly_score_threshold=5\""
+            - "SecAction \"id:900120,phase:1,nolog,pass,t:none,setvar:tx.outbound_anomaly_score_threshold=4\""
+            - "SecAction \"id:900200,phase:1,nolog,pass,t:none,setvar:'tx.allowed_methods=GET HEAD POST PUT PATCH DELETE OPTIONS'\""
+
+    # Headers de sécurité supplémentaires (en plus de nginx)
+    sia-secheaders:
+      headers:
+        customResponseHeaders:
+          X-Robots-Tag: "noindex, nofollow"
+          Server: ""
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        forceSTSHeader: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        permissionsPolicy: "camera=(self), microphone=(self), geolocation=(self), payment=(self)"
+
+    # Rate limit Traefik (en plus du nginx interne)
+    sia-ratelimit:
+      rateLimit:
+        average: 100
+        burst: 200
+        period: 1s
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Bloquer User-Agents suspects (couche 2 en plus de nginx)
+    sia-block-bots:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Bot: ""
+      # Custom rules dans coraza, plus puissant
+
+    # Compression
+    sia-compress:
+      compress: {}
+
+  # Routeurs : appliquer toutes les middlewares
+  routers:
+    sia-app:
+      rule: "Host(`simplif-ia.fr`) || Host(`51.75.31.123`)"
+      service: sia-frontend
+      middlewares:
+        - sia-waf@file
+        - sia-secheaders@file
+        - sia-ratelimit@file
+        - sia-block-bots@file
+        - sia-compress@file
+      tls:
+        certResolver: letsencrypt
+
+# ============================================================================
+# Configuration alternative : CrowdSec (recommandé pour Coolify)
+# ============================================================================
+# CrowdSec offre une protection comportementale collaborative.
+# Installation dans Coolify :
+#
+# 1. Server → Services → Add new resource → CrowdSec
+# 2. Choisir le scenario bundle "nginx-base" + "http-cve-2024"
+# 3. Activer le bouncer Traefik : crowdsec-traefik-bouncer
+# 4. Configurer Discord/Slack alerts via crowdsec console
+#
+# Avantages CrowdSec vs ModSecurity :
+# - Apprend de la communauté (intelligence partagée)
+# - Pas de faux positifs sur applis modernes
+# - Console SaaS gratuite incluse
