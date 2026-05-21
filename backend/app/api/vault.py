@@ -102,7 +102,7 @@ async def upload(
     doc = Document(
         user_id=current.id,
         name=name,
-        category=category,
+        category=category.value,  # str (le model stocke en String)
         mime_type=file.content_type or "application/octet-stream",
         size_bytes=len(raw),
         storage_path=rel,
@@ -119,7 +119,7 @@ async def upload(
         "id": str(doc.id),
         "name": doc.name,
         "size": doc.size_bytes,
-        "category": doc.category.value,
+        "category": doc.category,  # déjà str
         "integrity": integrity[:12] + "…",
     }
 
@@ -132,12 +132,12 @@ async def list_docs(
 ):
     q = select(Document).where(and_(Document.user_id == current.id, Document.is_deleted == False))
     if category:
-        q = q.where(Document.category == category)
+        q = q.where(Document.category == category.value)
     result = await db.execute(q.order_by(Document.created_at.desc()))
     docs = result.scalars().all()
     return [
         {
-            "id": str(d.id), "name": d.name, "category": d.category.value,
+            "id": str(d.id), "name": d.name, "category": d.category,
             "mime_type": d.mime_type, "size": d.size_bytes,
             "expires_at": d.expires_at.isoformat() if d.expires_at else None,
             "created_at": d.created_at.isoformat(),
@@ -156,7 +156,7 @@ async def list_categories():
         {
             "value": c.value,
             "label": c.value.replace("_", " ").title(),
-            "sensitive": c in SENSITIVE_CATEGORIES,
+            "sensitive": c.value in SENSITIVE_CATEGORIES,
         }
         for c in DocumentCategory
     ]
@@ -187,10 +187,10 @@ async def download(
             await _audit(
                 db, action="vault.pin_failed", actor=current, request=request,
                 target_id=str(doc.id), success=False,
-                extra={"category": doc.category.value},
+                extra={"category": doc.category},
             )
             await alert_svc.alert_vault_pin_failed(
-                db, user_id=current.id, category_name=doc.category.value, attempts=1
+                db, user_id=current.id, category_name=doc.category, attempts=1
             )
             raise HTTPException(
                 status_code=403,
@@ -233,7 +233,7 @@ async def download(
     doc.last_accessed_at = datetime.utcnow()
     await _audit(
         db, action="vault.download", actor=current, request=request, target_id=str(doc.id),
-        extra={"category": doc.category.value},
+        extra={"category": doc.category},
     )
 
     return StreamingResponse(
@@ -269,6 +269,6 @@ async def delete_doc(
         storage.delete(doc.storage_path)
     await _audit(
         db, action="vault.delete", actor=current, request=request, target_id=str(doc.id),
-        extra={"category": doc.category.value},
+        extra={"category": doc.category},
     )
     return None

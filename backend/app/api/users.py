@@ -22,6 +22,13 @@ async def list_users(
     return list(result.scalars().all())
 
 
+# ⚠️ /me DOIT être déclaré AVANT /{user_id} sinon FastAPI route /me comme un UUID
+@router.get("/me", response_model=UserOut)
+async def get_me(current: User = Depends(get_current_user)):
+    """Retourne le profil de l'utilisateur connecté."""
+    return current
+
+
 @router.get("/{user_id}", response_model=UserOut)
 async def get_user(
     user_id: UUID,

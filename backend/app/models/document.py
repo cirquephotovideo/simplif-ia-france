@@ -44,12 +44,13 @@ class DocumentCategory(str, enum.Enum):
 
 
 # Catégories nécessitant une vérification PIN supplémentaire avant download
+# (stockées comme strings pour matcher Document.category qui est str)
 SENSITIVE_CATEGORIES = {
-    DocumentCategory.IDENTITE,
-    DocumentCategory.BANQUE,
-    DocumentCategory.SANTE,
-    DocumentCategory.JUSTICE,
-    DocumentCategory.PM_PRETS,
+    DocumentCategory.IDENTITE.value,
+    DocumentCategory.BANQUE.value,
+    DocumentCategory.SANTE.value,
+    DocumentCategory.JUSTICE.value,
+    DocumentCategory.PM_PRETS.value,
 }
 
 
@@ -60,7 +61,9 @@ class Document(Base):
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False)
 
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    category: Mapped[DocumentCategory] = mapped_column(SQLEnum(DocumentCategory), default=DocumentCategory.AUTRE, index=True)
+    # ⚠️ Stocké en String (pas SQLEnum) pour permettre d'ajouter de nouvelles catégories
+    # sans migration ALTER TYPE en prod. Validation côté code via DocumentCategory(...)
+    category: Mapped[str] = mapped_column(String(50), default=DocumentCategory.AUTRE.value, index=True, nullable=False)
     mime_type: Mapped[str] = mapped_column(String(100), default="application/octet-stream")
     size_bytes: Mapped[int] = mapped_column(Integer, default=0)
 

@@ -1,11 +1,43 @@
 """Bootstrap initial : création du compte admin et seed des CERFAs."""
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 from loguru import logger
 
 from ..config import settings
 from ..models import User, UserRole, UserPlan, Cerfa
 from ..core.security import hash_password
+
+
+# Migrations lightweight au démarrage (PostgreSQL).
+# Idempotent — peut tourner à chaque boot sans casse.
+MIGRATIONS_SQL = [
+    # documents.category : passer de enum à varchar (pour pouvoir ajouter
+    # de nouvelles catégories sans ALTER TYPE)
+    "ALTER TABLE documents ALTER COLUMN category TYPE varchar(50) USING category::text",
+    # Nouvelles colonnes du Document (Phase sécurité renforcée)
+    "ALTER TABLE documents ADD COLUMN IF NOT EXISTS integrity_hash varchar(64)",
+    "ALTER TABLE documents ADD COLUMN IF NOT EXISTS crypto_version integer DEFAULT 1",
+    "ALTER TABLE documents ADD COLUMN IF NOT EXISTS download_count integer DEFAULT 0",
+    "ALTER TABLE documents ADD COLUMN IF NOT EXISTS last_accessed_at timestamptz",
+    "ALTER TABLE documents ADD COLUMN IF NOT EXISTS deleted_at timestamptz",
+]
+
+
+async def run_safe_migrations(db: AsyncSession) -> None:
+    """Applique les migrations idempotentes (silencieuse sur erreur connue)."""
+    for sql in MIGRATIONS_SQL:
+        try:
+            await db.execute(text(sql))
+            await db.commit()
+            logger.debug(f"✓ Migration OK: {sql[:80]}")
+        except Exception as e:
+            # Erreurs attendues : colonne déjà existante, type déjà varchar, table absente
+            msg = str(e).lower()
+            if any(k in msg for k in ["already exists", "does not exist", "cannot cast", "already of"]):
+                logger.debug(f"↪ migration skip ({sql[:50]}): {str(e)[:80]}")
+            else:
+                logger.warning(f"⚠ migration failed ({sql[:50]}): {e}")
+            await db.rollback()
 
 
 REAL_CERFAS = [
@@ -52,7 +84,10 @@ REAL_CERFAS = [
 
 
 async def bootstrap_admin(db: AsyncSession) -> None:
-    """Crée le compte admin et les CERFAs si la base est vide."""
+    """Applique les migrations + crée le compte admin et seed des CERFAs."""
+    # 1. Migrations idempotentes (colonnes manquantes, type enum→varchar…)
+    await run_safe_migrations(db)
+
     if not settings.ADMIN_PASSWORD:
         logger.warning("ADMIN_PASSWORD vide, skip bootstrap admin.")
         return
