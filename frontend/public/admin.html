@@ -73,73 +73,77 @@
   button { font-family: inherit; cursor: pointer; }
   a { color: inherit; text-decoration: none; }
 
-  /* ============ SIDEBAR · TRICOLORE LUXE ============ */
+  /* ============ SIDEBAR · TRICOLORE ANIMÉ ROTATIF ============ */
+  /* CSS variable animable (conic-gradient angle) */
+  @property --tricolor-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
   aside.sidebar {
     width: 280px; flex-shrink: 0;
     position: sticky; top: 0;
     height: 100vh;
     display: flex; flex-direction: column;
     overflow-y: auto;
-    /* Fond noir profond avec halos tricolores diffus venant de la gauche */
+    /* Fond noir profond */
     background:
-      /* Halo bleu — coin haut-gauche, doux */
-      radial-gradient(ellipse 65% 45% at -10% 12%, rgba(0, 85, 164, 0.22) 0%, transparent 65%),
-      /* Halo rouge — coin bas-gauche, doux */
-      radial-gradient(ellipse 65% 45% at -10% 88%, rgba(239, 65, 53, 0.16) 0%, transparent 65%),
-      /* Reflet blanc central très subtil */
-      radial-gradient(ellipse 50% 25% at 50% 50%, rgba(255, 255, 255, 0.025) 0%, transparent 70%),
-      /* Base : noir profond légèrement gradué */
+      radial-gradient(ellipse 50% 35% at 50% 0%, rgba(0, 85, 164, 0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 35% at 50% 100%, rgba(239, 65, 53, 0.12) 0%, transparent 65%),
       linear-gradient(180deg, #08081C 0%, #0C0C22 50%, #08081C 100%);
     color: rgba(235, 235, 245, 0.88);
-    border-right: 1px solid rgba(255, 255, 255, 0.045);
     box-shadow:
-      4px 0 32px rgba(0, 0, 0, 0.45),
+      4px 0 32px rgba(0, 0, 0, 0.5),
       inset 1px 0 0 rgba(255, 255, 255, 0.025);
+    isolation: isolate;
   }
 
-  /* Filet tricolore vertical à gauche — transitions douces, fade aux extrémités */
+  /* ── Cadre tricolore animé qui tourne autour de la sidebar ── */
   aside.sidebar::before {
     content: '';
     position: absolute;
-    top: 0; bottom: 0; left: 0;
-    width: 2px;
-    background: linear-gradient(180deg,
-      transparent 0%,
-      rgba(0, 85, 164, 0.0) 4%,
-      rgba(0, 85, 164, 0.95) 14%,
-      rgba(74, 122, 196, 1) 32%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(232, 76, 76, 1) 68%,
-      rgba(239, 65, 53, 0.95) 86%,
-      rgba(239, 65, 53, 0.0) 96%,
-      transparent 100%);
-    box-shadow:
-      0 0 16px rgba(0, 85, 164, 0.35),
-      0 0 16px rgba(239, 65, 53, 0.28);
-    z-index: 3;
+    inset: 0;
+    padding: 5px;                          /* épaisseur de la bordure animée */
+    background: conic-gradient(
+      from var(--tricolor-angle),
+      #0055A4 0deg,
+      #0055A4 95deg,
+      #FFFFFF 125deg,
+      #FFFFFF 175deg,
+      #EF4135 205deg,
+      #EF4135 305deg,
+      #0055A4 360deg
+    );
+    /* Mask pour ne garder que la bordure (pas le fond) */
+    -webkit-mask:
+      linear-gradient(#fff, #fff) content-box,
+      linear-gradient(#fff, #fff);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff, #fff) content-box,
+      linear-gradient(#fff, #fff);
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 8px rgba(0, 85, 164, 0.45))
+            drop-shadow(0 0 8px rgba(239, 65, 53, 0.35));
     pointer-events: none;
-    animation: tricolorShimmer 8s ease-in-out infinite;
-  }
-  @keyframes tricolorShimmer {
-    0%, 100% { opacity: 0.85; }
-    50%      { opacity: 1; }
+    z-index: 5;
+    animation: tricolorOrbit 7s linear infinite;
   }
 
-  /* Liseré tricolore en haut — fade sur les côtés, très subtil */
-  aside.sidebar::after {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(0, 85, 164, 0.55) 18%,
-      rgba(0, 85, 164, 0.75) 30%,
-      rgba(255, 255, 255, 0.65) 50%,
-      rgba(239, 65, 53, 0.75) 70%,
-      rgba(239, 65, 53, 0.55) 82%,
-      transparent 100%);
-    z-index: 3;
-    pointer-events: none;
+  @keyframes tricolorOrbit {
+    to { --tricolor-angle: 360deg; }
+  }
+
+  /* Fallback navigateurs sans @property : tricolore statique mais bien visible */
+  @supports not (background: conic-gradient(from var(--x, 0deg), red, red)) {
+    aside.sidebar::before {
+      background: linear-gradient(180deg,
+        #0055A4 0%, #0055A4 33%,
+        #FFFFFF 33%, #FFFFFF 66%,
+        #EF4135 66%, #EF4135 100%);
+      animation: none;
+    }
   }
 
   aside.sidebar > * { position: relative; z-index: 1; }
