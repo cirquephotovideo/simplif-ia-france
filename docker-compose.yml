@@ -58,10 +58,10 @@ services:
       - SERVICE_FQDN_FRONTEND_80=/
     ports:
       - "${FRONTEND_PORT:-8080}:80"
-    # Volume mount : sert les fichiers du disque en direct (pas besoin de rebuild)
-    # Pour la prod (Coolify), commenter cette ligne et faire un build complet
-    volumes:
-      - ./frontend/public:/usr/share/nginx/html:ro
+    # Volume mount désactivé en prod : les fichiers sont déjà dans l'image (COPY)
+    # En local, décommente pour servir depuis le disque sans rebuild.
+    # volumes:
+    #   - ./frontend/public:/usr/share/nginx/html:ro
     networks: [internal, public]
     labels:
       - "coolify.managed=true"
