@@ -8,6 +8,7 @@ from .mail import Mail, MailTag, MailPriority
 from .vault_request import VaultAccessRequest, RequestStatus, RequestPriority
 from .admin_settings import AdminSetting
 from .api_credential import ApiCredential, ApiProvider
+from .alert import Alert, AlertSeverity, AlertCategory
 
 __all__ = [
     "User", "UserRole", "UserPlan",
@@ -19,4 +20,5 @@ __all__ = [
     "VaultAccessRequest", "RequestStatus", "RequestPriority",
     "AdminSetting",
     "ApiCredential", "ApiProvider",
+    "Alert", "AlertSeverity", "AlertCategory",
 ]

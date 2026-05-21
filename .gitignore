@@ -57,3 +57,7 @@ storage/
 # Junk
 node_modules/
 *.bak
+
+# Scripts locaux de push qui contiennent potentiellement un PAT
+Push-*.command
+Migrer-*.command

@@ -15,7 +15,7 @@ import time
 
 from .config import settings
 from .database import engine, Base, AsyncSessionLocal
-from .api import auth, users, vault, demarches, cerfas, ai, tts, gouv, admin, mails, vault_requests, settings as settings_api, api_credentials
+from .api import auth, users, vault, demarches, cerfas, ai, tts, gouv, admin, mails, vault_requests, settings as settings_api, api_credentials, alerts
 from .core.bootstrap import bootstrap_admin
 from .core.csrf import CSRFMiddleware
 from .core.observability import init_sentry, setup_structured_logging
@@ -144,6 +144,7 @@ app.include_router(mails.router, prefix="/api/mails", tags=["Mails"])
 app.include_router(vault_requests.router, prefix="/api/vault-requests", tags=["Demandes coffre"])
 app.include_router(settings_api.router, prefix="/api/settings", tags=["Settings admin"])
 app.include_router(api_credentials.router, prefix="/api/credentials", tags=["Clés API"])
+app.include_router(alerts.router, prefix="/api/alerts", tags=["Alarmes"])
 
 
 @app.get("/health")
