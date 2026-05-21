@@ -73,33 +73,64 @@
   button { font-family: inherit; cursor: pointer; }
   a { color: inherit; text-decoration: none; }
 
-  /* ============ SIDEBAR ============ */
+  /* ============ SIDEBAR · TRICOLORE ÉLÉGANT ============ */
   aside.sidebar {
     width: 280px; flex-shrink: 0;
-    background:
-      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(139,61,255,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 30% at 50% 100%, rgba(0,191,201,0.10) 0%, transparent 70%),
-      linear-gradient(180deg, #07071A 0%, #0A0A24 50%, #0F0F30 100%);
-    color: rgba(232,232,250,0.85);
-    height: 100vh; position: sticky; top: 0;
+    position: sticky; top: 0;
+    height: 100vh;
     display: flex; flex-direction: column;
-    border-right: 1px solid rgba(139,61,255,0.18);
     overflow-y: auto;
-    box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+    /* Fond sombre profond avec halos tricolores subtils */
+    background:
+      /* Halo bleu en haut (drapeau bleu) */
+      radial-gradient(ellipse 100% 35% at 50% 0%, rgba(0, 85, 164, 0.20) 0%, transparent 70%),
+      /* Halo rouge en bas (drapeau rouge) */
+      radial-gradient(ellipse 90% 30% at 50% 100%, rgba(239, 65, 53, 0.15) 0%, transparent 70%),
+      /* Lueur blanche centrale très discrète */
+      radial-gradient(ellipse 60% 25% at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
+      /* Base : vertical gradient sombre élégant */
+      linear-gradient(180deg, #050518 0%, #0A0A24 35%, #0A0A20 65%, #0E0815 100%);
+    color: rgba(235, 235, 245, 0.88);
+    /* Bande tricolore verticale à gauche (bleu→blanc→rouge) */
+    border-left: 3px solid transparent;
+    border-image: linear-gradient(180deg,
+      #0055A4 0%, #0055A4 33.33%,
+      #FFFFFF 33.33%, #FFFFFF 66.66%,
+      #EF4135 66.66%, #EF4135 100%) 1;
+    border-right: 1px solid rgba(0, 85, 164, 0.20);
+    box-shadow:
+      4px 0 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
+  /* Grille subtile en arrière-plan + accent tricolore en pseudo-élément */
   aside.sidebar::before {
     content: '';
     position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(107,107,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(107,107,255,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(0, 85, 164, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239, 65, 53, 0.025) 1px, transparent 1px);
     background-size: 32px 32px;
     mask-image: radial-gradient(ellipse 100% 60% at 50% 30%, black 30%, transparent 90%);
     pointer-events: none;
   }
+  /* Liseré tricolore lumineux en haut de la sidebar */
+  aside.sidebar::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg,
+      #0055A4 0%, #0055A4 33.33%,
+      #FFFFFF 33.33%, #FFFFFF 66.66%,
+      #EF4135 66.66%, #EF4135 100%);
+    box-shadow: 0 0 12px rgba(0, 85, 164, 0.5), 0 0 12px rgba(239, 65, 53, 0.3);
+    z-index: 2;
+    pointer-events: none;
+  }
   aside.sidebar > * { position: relative; z-index: 1; }
   aside.sidebar::-webkit-scrollbar { width: 6px; }
-  aside.sidebar::-webkit-scrollbar-thumb { background: rgba(139,61,255,0.3); border-radius: 3px; }
+  aside.sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #0055A4 0%, #FFFFFF 50%, #EF4135 100%);
+    border-radius: 3px;
+  }
 
   .side-brand {
     padding: 18px 18px 16px;
