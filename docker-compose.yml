@@ -53,6 +53,9 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+    environment:
+      # Marqueur Coolify : expose ce service sur le FQDN configuré dans Coolify
+      - SERVICE_FQDN_FRONTEND=/
     ports:
       - "${FRONTEND_PORT:-8080}:80"
     # Volume mount : sert les fichiers du disque en direct (pas besoin de rebuild)
@@ -62,7 +65,6 @@ services:
     networks: [internal, public]
     labels:
       - "coolify.managed=true"
-      # Routing géré par Coolify (via le champ fqdn dans l'UI)
 
 networks:
   internal:
